@@ -1759,8 +1759,10 @@
           <p class="hero-sub">Prop 65 warning labels and exposure memos, built for law firms managing compliance across
             hundreds of clients and thousands of SKUs — reviewed and certified by counsel, not replaced by it.</p>
           <div class="hero-ctas">
-            <a href="#" id="registerBtn" class="btn btn-solid magnetic">Start Your Journey</a>
-            <a href="#" id="registerBtn" class="btn btn-ghost magnetic">View a Sample Memo</a>
+            <a href="#" id="registerBtn" data-auth="register" class="btn btn-solid magnetic auth-trigger">Start Your
+              Journey</a>
+            <!-- <a href="#" id="registerBtn" data-auth="login" class="btn btn-ghost magnetic auth-trigger">View a Sample
+              Memo</a> -->
           </div>
         </div>
       </div>
@@ -2051,7 +2053,7 @@
               <li>Standard warning drafting</li>
               <li>Email support</li>
             </ul>
-            <a href="#cta" class="btn btn-ghost magnetic" style="width:100%;">Register</a>
+            <a href="#" id="registerBtn" data-auth="register" class="btn btn-ghost magnetic auth-trigger" style="width:100%;">Register</a>
           </div>
           <div class="price-card hi reveal">
             <div class="price-tag">Most Common</div>
@@ -2064,7 +2066,7 @@
               <li>Multi-language label generation</li>
               <li>Full audit trail export</li>
             </ul>
-            <a href="#" id="registerBtn" class="btn btn-solid magnetic" style="width:100%;">Start Your Journey</a>
+            <a href="#" id="registerBtn" data-auth="register" class="btn btn-solid magnetic auth-trigger" style="width:100%;">Start Your Journey</a>
           </div>
           <div class="price-card reveal">
             <div class="price-tag">Am Law Scale</div>
@@ -2076,7 +2078,7 @@
               <li>Client-facing portal, white-labeled</li>
               <li>Named implementation lead</li>
             </ul>
-            <a href="#cta" class="btn btn-ghost magnetic" style="width:100%;">Talk to Us</a>
+            <a href="#" class="btn btn-ghost magnetic" style="width:100%;" mailto="contact@yourcompany.com">Talk to Us</a>
           </div>
         </div>
       </div>
@@ -2153,7 +2155,7 @@
         <h2>Stop drafting.<br><span class="accent">Start certifying.</span></h2>
         <p>Join the firms moving Prop 65 compliance out of spreadsheets and into a system built for the statute's actual
           clock.</p>
-        <a href="#" id="registerBtn" class="btn btn-solid magnetic" style="padding:18px 38px; font-size:14px;">Start
+        <a href="#" id="registerBtn" data-auth="register" class="btn btn-solid magnetic auth-trigger" style="padding:18px 38px; font-size:14px;">Start
           Your Journey</a>
       </div>
     </section>
@@ -2898,6 +2900,31 @@ Iloveyou1921`
           }, 500);
 
         }, 2800);
+
+      });
+
+    });
+
+    document.querySelectorAll(".auth-trigger").forEach(button => {
+
+      button.addEventListener("click", function (e) {
+
+        e.preventDefault();
+
+        authOverlay.classList.add("active");
+        document.body.classList.add("modal-open");
+
+        if (this.dataset.auth === "login") {
+
+          loginForm.classList.add("active");
+          registerForm.classList.remove("active");
+
+        } else {
+
+          registerForm.classList.add("active");
+          loginForm.classList.remove("active");
+
+        }
 
       });
 
