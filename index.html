@@ -1,1197 +1,2496 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prop65 — AI Warning Label &amp; Compliance Drafting for Law Firms</title>
-<meta name="description" content="AI-generated Prop 65 warning labels, exposure memos, and compliance drafting for law firms managing client portfolios across California's Proposition 65.">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prop65 — AI Warning Label &amp; Compliance Drafting for Law Firms</title>
+  <meta name="description"
+    content="Prop 65 warning labels, exposure memos, and compliance drafting for law firms managing client portfolios across California's Proposition 65.">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&display=swap"
+    rel="stylesheet">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-<style>
-  :root{
-    --ink:#0B0B0C;
-    --ink-raised:#151517;
-    --ink-raised-2:#1B1B1E;
-    --paper:#F3EEE1;
-    --paper-dim:#B9B2A0;
-    --paper-faint:#88837A;
-    --signal:#FFC629;
-    --signal-deep:#B9860A;
-    --signal-soft:rgba(255,198,41,0.12);
-    --alert:#E4483A;
-    --line:rgba(243,238,225,0.12);
-    --line-strong:rgba(243,238,225,0.22);
-    --display: "Big Shoulders Display", sans-serif;
-    --body: "Source Serif 4", Georgia, serif;
-    --mono: "IBM Plex Mono", monospace;
-  }
+  <style>
+    :root {
+      --ink: #0B0B0C;
+      --ink-raised: #151517;
+      --ink-raised-2: #1B1B1E;
+      --paper: #F3EEE1;
+      --paper-dim: #B9B2A0;
+      --paper-faint: #88837A;
+      --signal: #FFC629;
+      --signal-deep: #B9860A;
+      --signal-soft: rgba(255, 198, 41, 0.12);
+      --alert: #E4483A;
+      --line: rgba(243, 238, 225, 0.12);
+      --line-strong: rgba(243, 238, 225, 0.22);
+      --display: "Big Shoulders Display", sans-serif;
+      --body: "Source Serif 4", Georgia, serif;
+      --mono: "IBM Plex Mono", monospace;
+    }
 
-  *{margin:0;padding:0;box-sizing:border-box;}
-  html{scroll-behavior:smooth; background:var(--ink);}
-  body{
-    background:transparent;
-    color:var(--paper);
-    font-family:var(--body);
-    font-size:17px;
-    line-height:1.6;
-    overflow-x:hidden;
-    -webkit-font-smoothing:antialiased;
-  }
-  ::selection{background:var(--signal); color:var(--ink);}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  a{color:inherit; text-decoration:none;}
-  button{font-family:inherit; cursor:pointer; border:none; background:none; color:inherit;}
-  img{max-width:100%; display:block;}
+    html {
+      scroll-behavior: smooth;
+      background: var(--ink);
+    }
 
-  .wrap{max-width:1280px; margin:0 auto; padding:0 40px;}
+    body {
+      background: transparent;
+      color: var(--paper);
+      font-family: var(--body);
+      font-size: 17px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
 
-  ::-webkit-scrollbar{width:10px;}
-  ::-webkit-scrollbar-track{background:var(--ink);}
-  ::-webkit-scrollbar-thumb{background:var(--ink-raised-2); border-radius:0;}
+    ::selection {
+      background: var(--signal);
+      color: var(--ink);
+    }
 
-  @media (prefers-reduced-motion: reduce){
-    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important;}
-  }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-  /* ---------- cursor glow ---------- */
-  #cursor-glow{
-    position:fixed; top:0; left:0; width:520px; height:520px; border-radius:50%;
-    background:radial-gradient(circle, rgba(255,198,41,0.10) 0%, rgba(255,198,41,0) 65%);
-    pointer-events:none; z-index:2; transform:translate(-50%,-50%);
-    will-change:transform; transition:opacity .3s ease;
-  }
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: inherit;
+    }
 
-  /* ---------- permanent corridor grade (whole site) ---------- */
-  #corridor-veil{
-    position:fixed; inset:0; z-index:1; pointer-events:none;
-    background:
-      radial-gradient(ellipse 85% 65% at 50% 38%, rgba(11,11,12,0) 0%, rgba(11,11,12,0.32) 68%, rgba(11,11,12,0.72) 100%),
-      linear-gradient(180deg, rgba(11,11,12,0.1) 0%, rgba(11,11,12,0.1) 100%);
-  }
+    img {
+      max-width: 100%;
+      display: block;
+    }
 
-  /* ---------- hazard tape ---------- */
-  .hazard-tape{
-    height:14px; width:100%;
-    background:repeating-linear-gradient(135deg, var(--signal) 0 22px, var(--ink) 22px 44px);
-    position:relative; z-index:5;
-  }
-  .hazard-tape.thin{height:8px;}
+    .wrap {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
 
-  /* ---------- eyebrow / mono labels ---------- */
-  .eyebrow{
-    font-family:var(--mono); font-size:12.5px; letter-spacing:.16em; text-transform:uppercase;
-    color:var(--signal); display:inline-flex; align-items:center; gap:10px; margin-bottom:22px;
-  }
-  .eyebrow::before{content:""; width:22px; height:1px; background:var(--signal-deep);}
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
 
-  /* ---------- nav ---------- */
-  header{
-    position:fixed; top:0; left:0; right:0; z-index:100;
-    backdrop-filter:blur(16px) saturate(140%);
-    background:rgba(11,11,12,0.55);
-    border-bottom:1px solid var(--line);
-  }
-  nav{
-    display:flex; align-items:center; justify-content:space-between;
-    padding:18px 40px; max-width:1280px; margin:0 auto;
-  }
-  .logo{display:flex; align-items:center; gap:12px; font-family:var(--mono); font-weight:600; font-size:16px; letter-spacing:.04em;}
-  .logo svg{width:26px; height:26px; overflow:visible;}
-  .logo .tri-path{fill:none; stroke:var(--signal); stroke-width:6; stroke-linejoin:round; stroke-dasharray:100; stroke-dashoffset:100;}
-  .logo .tri-dot, .logo .tri-bar{fill:var(--signal);}
+    ::-webkit-scrollbar-track {
+      background: var(--ink);
+    }
 
-  .nav-links{display:flex; gap:38px; font-family:var(--mono); font-size:13.5px; letter-spacing:.03em; color:var(--paper-dim);}
-  .nav-links a{position:relative; padding:4px 0;}
-  .nav-links a::after{content:""; position:absolute; left:0; bottom:0; width:0; height:1px; background:var(--signal); transition:width .3s ease;}
-  .nav-links a:hover{color:var(--paper);}
-  .nav-links a:hover::after{width:100%;}
+    ::-webkit-scrollbar-thumb {
+      background: var(--ink-raised-2);
+      border-radius: 0;
+    }
 
-  .btn{
-    display:inline-flex; align-items:center; justify-content:center; gap:8px;
-    font-family:var(--mono); font-size:13px; letter-spacing:.04em; text-transform:uppercase;
-    padding:13px 24px; white-space:nowrap;
-  }
-  .btn-solid{background:var(--signal); color:var(--ink); font-weight:600;}
-  .btn-solid:hover{background:var(--paper);}
-  .btn-ghost{border:1px solid var(--line-strong); color:var(--paper);}
-  .btn-ghost:hover{border-color:var(--signal); color:var(--signal);}
-  .magnetic{position:relative; will-change:transform;}
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
 
-  .nav-cta{display:flex; align-items:center; gap:16px;}
-  .nav-cta .btn-ghost{display:none;}
-  @media(min-width:860px){.nav-cta .btn-ghost{display:inline-flex;}}
+    /* ---------- cursor glow ---------- */
+    #cursor-glow {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 520px;
+      height: 520px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 198, 41, 0.10) 0%, rgba(255, 198, 41, 0) 65%);
+      pointer-events: none;
+      z-index: 2;
+      transform: translate(-50%, -50%);
+      will-change: transform;
+      transition: opacity .3s ease;
+    }
 
-  /* ---------- hero ---------- */
-  .hero{
-    position:relative; min-height:100vh; display:flex; flex-direction:column; justify-content:center;
-    padding:150px 40px 100px; overflow:hidden;
-  }
-  #hero-canvas{position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:0; opacity:1; pointer-events:none;}
-  #scene-wrap{position:relative; z-index:1;}
-  .hero-grid{
-    position:absolute; inset:0; z-index:0;
-    background-image:
-      linear-gradient(var(--line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--line) 1px, transparent 1px);
-    background-size:64px 64px;
-    -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 30%, black 10%, transparent 75%);
-    mask-image:radial-gradient(ellipse 70% 60% at 50% 30%, black 10%, transparent 75%);
-    opacity:.5;
-  }
-  .hero-inner{position:relative; z-index:2; max-width:1280px; margin:0 auto; width:100%; display:grid; grid-template-columns:1.15fr .85fr; gap:60px; align-items:center;}
-  @media(max-width:980px){.hero-inner{grid-template-columns:1fr;}}
+    /* ---------- permanent corridor grade (whole site) ---------- */
+    #corridor-veil {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 85% 65% at 50% 38%, rgba(11, 11, 12, 0) 0%, rgba(11, 11, 12, 0.32) 68%, rgba(11, 11, 12, 0.72) 100%),
+        linear-gradient(180deg, rgba(11, 11, 12, 0.1) 0%, rgba(11, 11, 12, 0.1) 100%);
+    }
 
-  .hero h1{
-    font-family:var(--display); font-weight:800; text-transform:uppercase;
-    font-size:clamp(48px, 7vw, 96px); line-height:.94; letter-spacing:-.01em;
-    color:var(--paper);
-  }
-  .hero h1 .accent{color:var(--signal);}
-  .hero-sub{
-    font-family:var(--body); font-size:19px; color:var(--paper-dim); max-width:520px; margin:28px 0 40px; line-height:1.7;
-  }
-  .hero-ctas{display:flex; gap:16px; flex-wrap:wrap;}
+    /* ---------- hazard tape ---------- */
+    .hazard-tape {
+      height: 14px;
+      width: 100%;
+      background: repeating-linear-gradient(135deg, var(--signal) 0 22px, var(--ink) 22px 44px);
+      position: relative;
+      z-index: 5;
+    }
 
-  .split-line{overflow:hidden; display:block;}
-  .split-line > span{display:inline-block; will-change:transform;}
+    .hazard-tape.thin {
+      height: 8px;
+    }
 
-  /* hero label card */
-  .label-card{
-    position:relative; background:rgba(21,21,23,0.55); backdrop-filter:blur(10px); border:1px solid var(--line-strong);
-    padding:28px; max-width:380px; margin-left:auto; will-change:transform;
-  }
-  .label-card::before{
-    content:""; position:absolute; top:0; left:0; right:0; height:6px;
-    background:repeating-linear-gradient(135deg, var(--signal) 0 10px, var(--ink) 10px 20px);
-  }
-  .label-head{display:flex; align-items:center; gap:10px; margin-bottom:18px;}
-  .label-tri{width:30px; height:26px;}
-  .label-head-text{font-family:var(--mono); font-size:11px; letter-spacing:.1em; color:var(--paper-faint); text-transform:uppercase;}
-  .label-title{font-family:var(--display); font-weight:800; text-transform:uppercase; font-size:22px; letter-spacing:.01em; margin-bottom:12px;}
-  .label-body{font-family:var(--body); font-size:14.5px; color:var(--paper-dim); line-height:1.6; margin-bottom:20px;}
-  .label-foot{display:flex; justify-content:space-between; align-items:center; border-top:1px dashed var(--line-strong); padding-top:14px; font-family:var(--mono); font-size:11px; color:var(--paper-faint);}
-  .chip{
-    display:inline-flex; align-items:center; gap:6px; font-family:var(--mono); font-size:11px;
-    padding:6px 10px; border:1px solid var(--line-strong); background:rgba(11,11,12,0.6);
-    position:absolute; will-change:transform;
-  }
-  .chip .dot{width:6px; height:6px; border-radius:50%; background:var(--signal);}
-  .chip.c1{top:-24px; left:-40px;}
-  .chip.c2{bottom:40px; right:-52px;}
-  .chip.c3{bottom:-30px; left:20px;}
-  @media(max-width:980px){.label-card{margin:60px auto 0;} .chip{display:none;}}
+    /* ---------- eyebrow / mono labels ---------- */
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 12.5px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--signal);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
 
-  .scroll-cue{position:absolute; bottom:36px; left:40px; display:flex; align-items:center; gap:12px; font-family:var(--mono); font-size:11px; letter-spacing:.1em; color:var(--paper-faint); z-index:2;}
-  .scroll-cue .bar{width:1px; height:40px; background:var(--line-strong); position:relative; overflow:hidden;}
-  .scroll-cue .bar::after{content:""; position:absolute; top:-100%; left:0; width:100%; height:100%; background:var(--signal); animation:scrollbar 2.2s ease-in-out infinite;}
-  @keyframes scrollbar{0%{top:-100%;}50%{top:0;}100%{top:100%;}}
+    .eyebrow::before {
+      content: "";
+      width: 22px;
+      height: 1px;
+      background: var(--signal-deep);
+    }
 
-  section{position:relative; padding:150px 0;}
-  .section-head{max-width:640px; margin-bottom:80px;}
-  .section-head h2{font-family:var(--display); font-weight:800; text-transform:uppercase; font-size:clamp(34px,4.4vw,58px); line-height:1.02; letter-spacing:-.005em; color:var(--paper);}
-  .section-head p{font-family:var(--body); color:var(--paper-dim); font-size:17px; margin-top:20px; max-width:520px;}
+    /* ---------- nav ---------- */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      backdrop-filter: blur(16px) saturate(140%);
+      background: rgba(11, 11, 12, 0.55);
+      border-bottom: 1px solid var(--line);
+    }
 
-  /* ---------- problem (sticky/stack) ---------- */
-  .problem{padding-top:120px;}
-  .problem-layout{display:grid; grid-template-columns:.9fr 1.1fr; gap:80px;}
-  @media(max-width:900px){.problem-layout{grid-template-columns:1fr;}}
-  .problem-sticky{position:sticky; top:140px; align-self:start; height:fit-content;}
-  .problem-cards{display:flex; flex-direction:column; gap:24px;}
-  .p-card{
-    background:rgba(21,21,23,0.55); backdrop-filter:blur(8px); border:1px solid var(--line); padding:32px;
-    position:relative; will-change:transform, opacity;
-  }
-  .p-card .num{font-family:var(--mono); font-size:12px; color:var(--signal); letter-spacing:.1em;}
-  .p-card h3{font-family:var(--display); font-weight:700; text-transform:uppercase; font-size:24px; margin:12px 0 10px; letter-spacing:.01em;}
-  .p-card p{color:var(--paper-dim); font-size:15.5px;}
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 40px;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
 
-  /* ---------- workflow ---------- */
-  .workflow{background:rgba(21,21,23,0.28); backdrop-filter:blur(4px);}
-  .flow-rail{position:relative; margin-top:20px;}
-  .flow-line{position:absolute; left:23px; top:0; bottom:0; width:1px; background:var(--line-strong);}
-  .flow-line-fill{position:absolute; left:0; top:0; width:1px; height:0%; background:var(--signal);}
-  .flow-step{display:grid; grid-template-columns:48px 1fr; gap:28px; padding:34px 0; border-bottom:1px solid var(--line);}
-  .flow-step:last-child{border-bottom:none;}
-  .flow-marker{
-    width:48px; height:48px; border-radius:50%; border:1px solid var(--line-strong);
-    display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-size:14px; color:var(--paper-dim);
-    background:rgba(11,11,12,0.7); position:relative; z-index:2; flex-shrink:0; transition:all .4s ease;
-  }
-  .flow-step.active .flow-marker{border-color:var(--signal); color:var(--signal); box-shadow:0 0 0 4px var(--signal-soft);}
-  .flow-step h3{font-family:var(--display); font-weight:700; text-transform:uppercase; font-size:24px; letter-spacing:.01em; margin-bottom:8px;}
-  .flow-step p{color:var(--paper-dim); font-size:15.5px; max-width:520px;}
-  .flow-tag{font-family:var(--mono); font-size:11px; color:var(--signal-deep); letter-spacing:.08em; text-transform:uppercase; margin-top:10px; display:inline-block;}
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--mono);
+      font-weight: 600;
+      font-size: 16px;
+      letter-spacing: .04em;
+    }
 
-  /* ---------- features ---------- */
-  .feature-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line);}
-  @media(max-width:900px){.feature-grid{grid-template-columns:1fr;}}
-  .f-card{
-    background:rgba(11,11,12,0.55); backdrop-filter:blur(8px); padding:40px 34px; position:relative; overflow:hidden;
-    transition:background .4s ease;
-  }
-  .f-card::before{
-    content:""; position:absolute; top:0; right:0; width:0; height:0;
-    border-style:solid; border-width:0 34px 34px 0; border-color:transparent var(--signal) transparent transparent;
-    opacity:0; transition:opacity .35s ease;
-  }
-  .f-card:hover{background:rgba(21,21,23,0.7);}
-  .f-card:hover::before{opacity:1;}
-  .f-icon{width:38px; height:38px; margin-bottom:24px; color:var(--signal);}
-  .f-card h3{font-family:var(--display); font-weight:700; text-transform:uppercase; font-size:21px; letter-spacing:.01em; margin-bottom:12px;}
-  .f-card p{color:var(--paper-dim); font-size:15px;}
+    .logo svg {
+      width: 26px;
+      height: 26px;
+      overflow: visible;
+    }
 
-  /* ---------- stats ---------- */
-  .stats-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:40px;}
-  @media(max-width:900px){.stats-grid{grid-template-columns:repeat(2,1fr);}}
-  .stat{border-left:1px solid var(--line-strong); padding-left:22px;}
-  .stat .num{font-family:var(--display); font-weight:800; font-size:clamp(40px,4.6vw,64px); color:var(--signal); line-height:1;}
-  .stat .label{font-family:var(--mono); font-size:12px; color:var(--paper-dim); letter-spacing:.05em; margin-top:12px; text-transform:uppercase;}
+    .logo .tri-path {
+      fill: none;
+      stroke: var(--signal);
+      stroke-width: 6;
+      stroke-linejoin: round;
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
+    }
 
-  /* ---------- practice areas (horizontal scroll) ---------- */
-  .practice-scroll-wrap{overflow:hidden;}
-  .practice-track{display:flex; gap:24px; will-change:transform;}
-  .prac-card{
-    flex:0 0 320px; background:rgba(21,21,23,0.55); backdrop-filter:blur(8px); border:1px solid var(--line);
-    padding:34px; height:320px; display:flex; flex-direction:column; justify-content:space-between;
-    transition:border-color .3s ease, transform .3s ease;
-  }
-  .prac-card:hover{border-color:var(--signal); transform:translateY(-6px);}
-  .prac-card .tag{font-family:var(--mono); font-size:11px; color:var(--signal); letter-spacing:.1em; text-transform:uppercase;}
-  .prac-card h3{font-family:var(--display); font-weight:700; text-transform:uppercase; font-size:26px; margin:16px 0 10px;}
-  .prac-card p{color:var(--paper-dim); font-size:14.5px;}
+    .logo .tri-dot,
+    .logo .tri-bar {
+      fill: var(--signal);
+    }
 
-  /* ---------- citation network ---------- */
-  .network-wrap{position:relative; border:1px solid var(--line); background:rgba(21,21,23,0.45); backdrop-filter:blur(8px); padding:40px; margin-top:20px;}
-  #network-svg{width:100%; height:420px;}
-  .net-node-label{font-family:var(--mono); font-size:10.5px; fill:var(--paper-dim);}
+    .nav-links {
+      display: flex;
+      gap: 38px;
+      font-family: var(--mono);
+      font-size: 13.5px;
+      letter-spacing: .03em;
+      color: var(--paper-dim);
+    }
 
-  /* ---------- testimonials marquee ---------- */
-  .marquee-wrap{overflow:hidden; padding:20px 0;}
-  .marquee-track{display:flex; gap:24px; width:max-content;}
-  .t-card{
-    flex:0 0 420px; background:rgba(21,21,23,0.6); backdrop-filter:blur(8px); border:1px solid var(--line); padding:32px;
-  }
-  .t-card p{font-size:16px; color:var(--paper); font-family:var(--body); font-style:italic; line-height:1.7; margin-bottom:24px;}
-  .t-who{display:flex; align-items:center; gap:12px;}
-  .t-avatar{width:38px; height:38px; background:var(--signal); color:var(--ink); font-family:var(--mono); font-weight:700; display:flex; align-items:center; justify-content:center; font-size:14px;}
-  .t-name{font-family:var(--mono); font-size:13px; color:var(--paper);}
-  .t-role{font-family:var(--mono); font-size:11px; color:var(--paper-faint);}
+    .nav-links a {
+      position: relative;
+      padding: 4px 0;
+    }
 
-  /* ---------- pricing ---------- */
-  .pricing-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
-  @media(max-width:900px){.pricing-grid{grid-template-columns:1fr;}}
-  .price-card{
-    background:rgba(21,21,23,0.6); backdrop-filter:blur(10px); border:1px solid var(--line-strong);
-    padding:40px 32px; display:flex; flex-direction:column; transition:transform .35s ease, border-color .35s ease;
-  }
-  .price-card.hi{background:rgba(255,198,41,0.08); border-color:var(--signal); transform:scale(1.03);}
-  .price-card:hover{transform:translateY(-8px);}
-  .price-card.hi:hover{transform:scale(1.03) translateY(-8px);}
-  .price-tag{font-family:var(--mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--signal);}
-  .price-name{font-family:var(--display); font-weight:800; text-transform:uppercase; font-size:32px; margin:14px 0 6px;}
-  .price-amt{font-family:var(--mono); font-size:15px; color:var(--paper-dim); margin-bottom:28px;}
-  .price-amt b{font-size:32px; color:var(--paper); font-family:var(--display);}
-  .price-feats{list-style:none; display:flex; flex-direction:column; gap:14px; margin-bottom:32px; flex:1;}
-  .price-feats li{font-size:14.5px; color:var(--paper-dim); display:flex; gap:10px; align-items:flex-start;}
-  .price-feats li::before{content:"—"; color:var(--signal); flex-shrink:0;}
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 1px;
+      background: var(--signal);
+      transition: width .3s ease;
+    }
 
-  /* ---------- faq ---------- */
-  .faq-item{border-bottom:1px solid var(--line);}
-  .faq-q{display:flex; justify-content:space-between; align-items:center; padding:28px 0; cursor:pointer;}
-  .faq-q h3{font-family:var(--display); font-weight:700; text-transform:uppercase; font-size:19px; letter-spacing:.01em;}
-  .faq-icon{width:20px; height:20px; position:relative; flex-shrink:0;}
-  .faq-icon::before, .faq-icon::after{content:""; position:absolute; background:var(--signal); top:50%; left:50%; transform:translate(-50%,-50%);}
-  .faq-icon::before{width:16px; height:1.5px;}
-  .faq-icon::after{width:1.5px; height:16px; transition:transform .3s ease;}
-  .faq-item.open .faq-icon::after{transform:translate(-50%,-50%) rotate(90deg) scale(0);}
-  .faq-a{max-height:0; overflow:hidden; transition:max-height .45s ease;}
-  .faq-a p{padding-bottom:28px; color:var(--paper-dim); font-size:15.5px; max-width:640px;}
+    .nav-links a:hover {
+      color: var(--paper);
+    }
 
-  /* ---------- final cta ---------- */
-  .final-cta{text-align:center; overflow:hidden; position:relative;}
-  .final-cta h2{font-family:var(--display); font-weight:800; text-transform:uppercase; font-size:clamp(42px,7vw,88px); line-height:.96; letter-spacing:-.01em;}
-  .final-cta .accent{color:var(--signal);}
-  .final-cta p{color:var(--paper-dim); font-size:18px; max-width:520px; margin:26px auto 44px;}
-  .final-glow{position:absolute; top:50%; left:50%; width:900px; height:900px; transform:translate(-50%,-50%);
-    background:radial-gradient(circle, rgba(255,198,41,0.10) 0%, transparent 70%); z-index:0;}
+    .nav-links a:hover::after {
+      width: 100%;
+    }
 
-  /* ---------- footer ---------- */
-  footer{border-top:1px solid var(--line); padding:70px 0 40px; position:relative; z-index:1;}
-  .footer-top{display:grid; grid-template-columns:1.4fr repeat(3,1fr); gap:40px; margin-bottom:60px;}
-  @media(max-width:800px){.footer-top{grid-template-columns:1fr 1fr;}}
-  .footer-brand{font-family:var(--mono); font-size:15px; letter-spacing:.04em; margin-bottom:14px; display:flex; align-items:center; gap:10px;}
-  .footer-brand-desc{color:var(--paper-faint); font-size:14px; max-width:280px;}
-  .footer-col h4{font-family:var(--mono); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--paper-faint); margin-bottom:18px;}
-  .footer-col a{display:block; color:var(--paper-dim); font-size:14.5px; margin-bottom:12px; transition:color .2s ease;}
-  .footer-col a:hover{color:var(--signal);}
-  .footer-bottom{display:flex; justify-content:space-between; align-items:center; padding-top:30px; border-top:1px solid var(--line); font-family:var(--mono); font-size:12px; color:var(--paper-faint); flex-wrap:wrap; gap:16px;}
-  .footer-legal{max-width:560px;}
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 13px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      padding: 13px 24px;
+      white-space: nowrap;
+    }
 
-  .reveal{opacity:0; transform:translateY(28px); filter:blur(6px); will-change:transform, opacity, filter;}
+    .btn-solid {
+      background: var(--signal);
+      color: var(--ink);
+      font-weight: 600;
+    }
 
-  @media(max-width:640px){
-    .wrap, nav{padding-left:22px; padding-right:22px;}
-    section{padding:100px 0;}
-    .hero{padding:130px 22px 80px;}
-    .nav-links{display:none;}
-  }
-</style>
+    .btn-solid:hover {
+      background: var(--paper);
+    }
+
+    .btn-ghost {
+      border: 1px solid var(--line-strong);
+      color: var(--paper);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--signal);
+      color: var(--signal);
+    }
+
+    .magnetic {
+      position: relative;
+      will-change: transform;
+    }
+
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .nav-cta .btn-ghost {
+      display: none;
+    }
+
+    @media(min-width:860px) {
+      .nav-cta .btn-ghost {
+        display: inline-flex;
+      }
+    }
+
+    /* ---------- hero ---------- */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 150px 40px 100px;
+      overflow: hidden;
+    }
+
+    #hero-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      opacity: 1;
+      pointer-events: none;
+    }
+
+    #scene-wrap {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background-image:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 64px 64px;
+      -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black 10%, transparent 75%);
+      mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black 10%, transparent 75%);
+      opacity: .5;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 1280px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    @media(max-width:980px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .hero h1 {
+      font-family: var(--display);
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: clamp(48px, 7vw, 96px);
+      line-height: .94;
+      letter-spacing: -.01em;
+      color: var(--paper);
+    }
+
+    .hero h1 .accent {
+      color: var(--signal);
+    }
+
+    .hero-sub {
+      font-family: var(--body);
+      font-size: 19px;
+      color: var(--paper-dim);
+      max-width: 520px;
+      margin: 28px 0 40px;
+      line-height: 1.7;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .split-line {
+      overflow: hidden;
+      display: block;
+    }
+
+    .split-line>span {
+      display: inline-block;
+      will-change: transform;
+    }
+
+    /* hero label card */
+    .label-card {
+      position: relative;
+      background: rgba(21, 21, 23, 0.55);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--line-strong);
+      padding: 28px;
+      max-width: 380px;
+      margin-left: auto;
+      will-change: transform;
+    }
+
+    .label-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: repeating-linear-gradient(135deg, var(--signal) 0 10px, var(--ink) 10px 20px);
+    }
+
+    .label-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .label-tri {
+      width: 30px;
+      height: 26px;
+    }
+
+    .label-head-text {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .1em;
+      color: var(--paper-faint);
+      text-transform: uppercase;
+    }
+
+    .label-title {
+      font-family: var(--display);
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: 22px;
+      letter-spacing: .01em;
+      margin-bottom: 12px;
+    }
+
+    .label-body {
+      font-family: var(--body);
+      font-size: 14.5px;
+      color: var(--paper-dim);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .label-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px dashed var(--line-strong);
+      padding-top: 14px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--paper-faint);
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 6px 10px;
+      border: 1px solid var(--line-strong);
+      background: rgba(11, 11, 12, 0.6);
+      position: absolute;
+      will-change: transform;
+    }
+
+    .chip .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--signal);
+    }
+
+    .chip.c1 {
+      top: -24px;
+      left: -40px;
+    }
+
+    .chip.c2 {
+      bottom: 40px;
+      right: -52px;
+    }
+
+    .chip.c3 {
+      bottom: -30px;
+      left: 20px;
+    }
+
+    @media(max-width:980px) {
+      .label-card {
+        margin: 60px auto 0;
+      }
+
+      .chip {
+        display: none;
+      }
+    }
+
+    .scroll-cue {
+      position: absolute;
+      bottom: 36px;
+      left: 40px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .1em;
+      color: var(--paper-faint);
+      z-index: 2;
+    }
+
+    .scroll-cue .bar {
+      width: 1px;
+      height: 40px;
+      background: var(--line-strong);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .scroll-cue .bar::after {
+      content: "";
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--signal);
+      animation: scrollbar 2.2s ease-in-out infinite;
+    }
+
+    @keyframes scrollbar {
+      0% {
+        top: -100%;
+      }
+
+      50% {
+        top: 0;
+      }
+
+      100% {
+        top: 100%;
+      }
+    }
+
+    section {
+      position: relative;
+      padding: 150px 0;
+    }
+
+    .section-head {
+      max-width: 640px;
+      margin-bottom: 80px;
+    }
+
+    .section-head h2 {
+      font-family: var(--display);
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: clamp(34px, 4.4vw, 58px);
+      line-height: 1.02;
+      letter-spacing: -.005em;
+      color: var(--paper);
+    }
+
+    .section-head p {
+      font-family: var(--body);
+      color: var(--paper-dim);
+      font-size: 17px;
+      margin-top: 20px;
+      max-width: 520px;
+    }
+
+    /* ---------- problem (sticky/stack) ---------- */
+    .problem {
+      padding-top: 120px;
+    }
+
+    .problem-layout {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 80px;
+    }
+
+    @media(max-width:900px) {
+      .problem-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .problem-sticky {
+      position: sticky;
+      top: 140px;
+      align-self: start;
+      height: fit-content;
+    }
+
+    .problem-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .p-card {
+      background: rgba(21, 21, 23, 0.55);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--line);
+      padding: 32px;
+      position: relative;
+      will-change: transform, opacity;
+    }
+
+    .p-card .num {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--signal);
+      letter-spacing: .1em;
+    }
+
+    .p-card h3 {
+      font-family: var(--display);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 24px;
+      margin: 12px 0 10px;
+      letter-spacing: .01em;
+    }
+
+    .p-card p {
+      color: var(--paper-dim);
+      font-size: 15.5px;
+    }
+
+    /* ---------- workflow ---------- */
+    .workflow {
+      background: rgba(21, 21, 23, 0.28);
+      backdrop-filter: blur(4px);
+    }
+
+    .flow-rail {
+      position: relative;
+      margin-top: 20px;
+    }
+
+    .flow-line {
+      position: absolute;
+      left: 23px;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: var(--line-strong);
+    }
+
+    .flow-line-fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1px;
+      height: 0%;
+      background: var(--signal);
+    }
+
+    .flow-step {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 28px;
+      padding: 34px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .flow-step:last-child {
+      border-bottom: none;
+    }
+
+    .flow-marker {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--line-strong);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 14px;
+      color: var(--paper-dim);
+      background: rgba(11, 11, 12, 0.7);
+      position: relative;
+      z-index: 2;
+      flex-shrink: 0;
+      transition: all .4s ease;
+    }
+
+    .flow-step.active .flow-marker {
+      border-color: var(--signal);
+      color: var(--signal);
+      box-shadow: 0 0 0 4px var(--signal-soft);
+    }
+
+    .flow-step h3 {
+      font-family: var(--display);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 24px;
+      letter-spacing: .01em;
+      margin-bottom: 8px;
+    }
+
+    .flow-step p {
+      color: var(--paper-dim);
+      font-size: 15.5px;
+      max-width: 520px;
+    }
+
+    .flow-tag {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--signal-deep);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-top: 10px;
+      display: inline-block;
+    }
+
+    /* ---------- features ---------- */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+
+    @media(max-width:900px) {
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .f-card {
+      background: rgba(11, 11, 12, 0.55);
+      backdrop-filter: blur(8px);
+      padding: 40px 34px;
+      position: relative;
+      overflow: hidden;
+      transition: background .4s ease;
+    }
+
+    .f-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 0 34px 34px 0;
+      border-color: transparent var(--signal) transparent transparent;
+      opacity: 0;
+      transition: opacity .35s ease;
+    }
+
+    .f-card:hover {
+      background: rgba(21, 21, 23, 0.7);
+    }
+
+    .f-card:hover::before {
+      opacity: 1;
+    }
+
+    .f-icon {
+      width: 38px;
+      height: 38px;
+      margin-bottom: 24px;
+      color: var(--signal);
+    }
+
+    .f-card h3 {
+      font-family: var(--display);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 21px;
+      letter-spacing: .01em;
+      margin-bottom: 12px;
+    }
+
+    .f-card p {
+      color: var(--paper-dim);
+      font-size: 15px;
+    }
+
+    /* ---------- stats ---------- */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+    }
+
+    @media(max-width:900px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .stat {
+      border-left: 1px solid var(--line-strong);
+      padding-left: 22px;
+    }
+
+    .stat .num {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(40px, 4.6vw, 64px);
+      color: var(--signal);
+      line-height: 1;
+    }
+
+    .stat .label {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--paper-dim);
+      letter-spacing: .05em;
+      margin-top: 12px;
+      text-transform: uppercase;
+    }
+
+    /* ---------- practice areas (horizontal scroll) ---------- */
+    .practice-scroll-wrap {
+      width: 100%;
+      overflow: visible;
+    }
+
+    .practice-track {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      /* gap: 24px; */
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      /* padding: 0 40px; */
+      box-sizing: border-box;
+    }
+
+    /* ==========================================================
+   PRACTICE AREA CARDS
+   Premium AI SaaS Style (Apple × Linear × Vercel)
+   ========================================================== */
+    .prac-card h3 {
+      /* margin: 22px 0 14px; */
+      /* already there — this is now the only thing controlling the gap */
+    }
+
+    .prac-card{
+    position:relative;
+    overflow:hidden;
+
+    min-height:340px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+
+    padding:38px;
+
+    /* REMOVE THESE */
+    /* flex:0 0 340px; */
+
+    width:100%;
+      background:
+        radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+          rgba(37, 99, 235, .10),
+          transparent 180px),
+        linear-gradient(180deg,
+          rgba(22, 22, 24, .72) 0%,
+          rgba(12, 12, 14, .90) 100%);
+
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 24px;
+
+      transition:
+        transform .45s cubic-bezier(.22, .61, .36, 1),
+        border-color .35s ease,
+        box-shadow .45s ease,
+        background .35s ease;
+    }
+
+    /* Glow Overlay */
+
+    .prac-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+
+      background:
+        radial-gradient(circle at top right,
+          rgba(37, 99, 235, .18),
+          transparent 45%);
+
+      opacity: 0;
+      transition: opacity .45s ease;
+      pointer-events: none;
+    }
+
+    /* Animated Top Line */
+
+    .prac-card::after {
+      content: "";
+      position: absolute;
+
+      top: 0;
+      left: 0;
+
+      width: 100%;
+      height: 1px;
+
+      background: linear-gradient(90deg,
+          transparent,
+          var(--signal),
+          transparent);
+
+      transform: translateX(-100%);
+      transition: transform .7s ease;
+    }
+
+    /* Hover */
+
+    .prac-card:hover {
+      transform: translateY(-12px);
+
+      border-color: rgba(37, 99, 235, .45);
+
+      box-shadow:
+        0 20px 50px rgba(0, 0, 0, .45),
+        0 0 35px rgba(37, 99, 235, .12);
+    }
+
+    .prac-card:hover::before {
+      opacity: 1;
+    }
+
+    .prac-card:hover::after {
+      transform: translateX(100%);
+    }
+
+    /* Floating Animation */
+
+    .prac-card {
+      animation: floatCard 6s ease-in-out infinite;
+    }
+
+    .prac-card:nth-child(even) {
+      animation-delay: 2s;
+    }
+
+    .prac-card:nth-child(3n) {
+      animation-delay: 4s;
+    }
+
+    @keyframes floatCard {
+
+      0%,
+      100% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-6px);
+      }
+    }
+
+    /* Hover overrides floating animation */
+
+    .prac-card:hover {
+      animation-play-state: paused;
+    }
+
+    /* ==========================================================
+   TAG
+   ========================================================== */
+
+    .prac-card .tag {
+
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      width: fit-content;
+
+      padding: 8px 14px;
+
+      border-radius: 999px;
+
+      background: rgba(37, 99, 235, .08);
+
+      border: 1px solid rgba(37, 99, 235, .18);
+
+      color: var(--signal);
+
+      font-family: var(--mono);
+
+      font-size: 11px;
+
+      font-weight: 600;
+
+      letter-spacing: .12em;
+
+      text-transform: uppercase;
+
+      transition:
+        background .35s ease,
+        border-color .35s ease,
+        color .35s ease;
+    }
+
+    .prac-card:hover .tag {
+
+      background: rgba(37, 99, 235, .15);
+
+      border-color: rgba(37, 99, 235, .35);
+
+      color: #fff;
+    }
+
+    /* ==========================================================
+   HEADING
+   ========================================================== */
+
+    .prac-card h3 {
+
+      margin: 22px 0 14px;
+
+      font-family: var(--display);
+
+      font-size: clamp(28px, 2vw, 32px);
+
+      line-height: 1.1;
+
+      font-weight: 800;
+
+      letter-spacing: -.03em;
+
+      color: var(--paper);
+
+      transition: color .35s ease;
+    }
+
+    .prac-card:hover h3 {
+      color: #ffffff;
+    }
+
+    /* ==========================================================
+   PARAGRAPH
+   ========================================================== */
+
+    .prac-card p {
+
+      color: var(--paper-dim);
+
+      font-size: 15px;
+
+      line-height: 1.75;
+
+      letter-spacing: .01em;
+
+      transition: color .35s ease;
+    }
+
+    .prac-card:hover p {
+      color: rgba(255, 255, 255, .88);
+    }
+
+    /* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+
+    @media (max-width: 768px) {
+
+      .prac-card {
+
+        flex: 0 0 300px;
+
+        min-height: 310px;
+
+        padding: 30px;
+
+        border-radius: 20px;
+      }
+
+      .prac-card h3 {
+
+        font-size: 24px;
+      }
+
+      .prac-card p {
+
+        font-size: 14px;
+      }
+
+      .prac-card .tag {
+
+        font-size: 10px;
+      }
+    }
+
+    /* ---------- citation network ---------- */
+    .network-wrap {
+      position: relative;
+      border: 1px solid var(--line);
+      background: rgba(21, 21, 23, 0.45);
+      backdrop-filter: blur(8px);
+      padding: 40px;
+      margin-top: 20px;
+    }
+
+    #network-svg {
+      width: 100%;
+      height: 420px;
+    }
+
+    .net-node-label {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      fill: var(--paper-dim);
+    }
+
+    /* ---------- testimonials marquee ---------- */
+    .marquee-wrap {
+      overflow: hidden;
+      padding: 20px 0;
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 24px;
+      width: max-content;
+    }
+
+    .t-card {
+      flex: 0 0 420px;
+      background: rgba(21, 21, 23, 0.6);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--line);
+      padding: 32px;
+    }
+
+    .t-card p {
+      font-size: 16px;
+      color: var(--paper);
+      font-family: var(--body);
+      font-style: italic;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    .t-who {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .t-avatar {
+      width: 38px;
+      height: 38px;
+      background: var(--signal);
+      color: var(--ink);
+      font-family: var(--mono);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .t-name {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--paper);
+    }
+
+    .t-role {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--paper-faint);
+    }
+
+    /* ---------- pricing ---------- */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    @media(max-width:900px) {
+      .pricing-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .price-card {
+      background: rgba(21, 21, 23, 0.6);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--line-strong);
+      padding: 40px 32px;
+      display: flex;
+      flex-direction: column;
+      transition: transform .35s ease, border-color .35s ease;
+    }
+
+    .price-card.hi {
+      background: rgba(255, 198, 41, 0.08);
+      border-color: var(--signal);
+      transform: scale(1.03);
+    }
+
+    .price-card:hover {
+      transform: translateY(-8px);
+    }
+
+    .price-card.hi:hover {
+      transform: scale(1.03) translateY(-8px);
+    }
+
+    .price-tag {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--signal);
+    }
+
+    .price-name {
+      font-family: var(--display);
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: 32px;
+      margin: 14px 0 6px;
+    }
+
+    .price-amt {
+      font-family: var(--mono);
+      font-size: 15px;
+      color: var(--paper-dim);
+      margin-bottom: 28px;
+    }
+
+    .price-amt b {
+      font-size: 32px;
+      color: var(--paper);
+      font-family: var(--display);
+    }
+
+    .price-feats {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 32px;
+      flex: 1;
+    }
+
+    .price-feats li {
+      font-size: 14.5px;
+      color: var(--paper-dim);
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .price-feats li::before {
+      content: "—";
+      color: var(--signal);
+      flex-shrink: 0;
+    }
+
+    /* ---------- faq ---------- */
+    .faq-item {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .faq-q {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px 0;
+      cursor: pointer;
+    }
+
+    .faq-q h3 {
+      font-family: var(--display);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 19px;
+      letter-spacing: .01em;
+    }
+
+    .faq-icon {
+      width: 20px;
+      height: 20px;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .faq-icon::before,
+    .faq-icon::after {
+      content: "";
+      position: absolute;
+      background: var(--signal);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .faq-icon::before {
+      width: 16px;
+      height: 1.5px;
+    }
+
+    .faq-icon::after {
+      width: 1.5px;
+      height: 16px;
+      transition: transform .3s ease;
+    }
+
+    .faq-item.open .faq-icon::after {
+      transform: translate(-50%, -50%) rotate(90deg) scale(0);
+    }
+
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .45s ease;
+    }
+
+    .faq-a p {
+      padding-bottom: 28px;
+      color: var(--paper-dim);
+      font-size: 15.5px;
+      max-width: 640px;
+    }
+
+    /* ---------- final cta ---------- */
+    .final-cta {
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .final-cta h2 {
+      font-family: var(--display);
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: clamp(42px, 7vw, 88px);
+      line-height: .96;
+      letter-spacing: -.01em;
+    }
+
+    .final-cta .accent {
+      color: var(--signal);
+    }
+
+    .final-cta p {
+      color: var(--paper-dim);
+      font-size: 18px;
+      max-width: 520px;
+      margin: 26px auto 44px;
+    }
+
+    .final-glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 900px;
+      height: 900px;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(255, 198, 41, 0.10) 0%, transparent 70%);
+      z-index: 0;
+    }
+
+    /* ---------- footer ---------- */
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 70px 0 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.4fr repeat(3, 1fr);
+      gap: 40px;
+      margin-bottom: 60px;
+    }
+
+    @media(max-width:800px) {
+      .footer-top {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .footer-brand {
+      font-family: var(--mono);
+      font-size: 15px;
+      letter-spacing: .04em;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .footer-brand-desc {
+      color: var(--paper-faint);
+      font-size: 14px;
+      max-width: 280px;
+    }
+
+    .footer-col h4 {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--paper-faint);
+      margin-bottom: 18px;
+    }
+
+    .footer-col a {
+      display: block;
+      color: var(--paper-dim);
+      font-size: 14.5px;
+      margin-bottom: 12px;
+      transition: color .2s ease;
+    }
+
+    .footer-col a:hover {
+      color: var(--signal);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 30px;
+      border-top: 1px solid var(--line);
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--paper-faint);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-legal {
+      max-width: 560px;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      filter: blur(6px);
+      will-change: transform, opacity, filter;
+    }
+
+    @media(max-width:640px) {
+
+      .wrap,
+      nav {
+        padding-left: 22px;
+        padding-right: 22px;
+      }
+
+      section {
+        padding: 100px 0;
+      }
+
+      .hero {
+        padding: 130px 22px 80px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<div id="cursor-glow"></div>
-<canvas id="hero-canvas"></canvas>
-<div id="corridor-veil"></div>
+  <div id="cursor-glow"></div>
+  <canvas id="hero-canvas"></canvas>
+  <div id="corridor-veil"></div>
 
-<header>
-  <nav>
-    <a href="#" class="logo">
-      <svg viewBox="0 0 30 26" class="tri-icon">
-        <path class="tri-path" d="M15 2 L28 24 L2 24 Z"/>
-        <rect class="tri-bar" x="13.5" y="11" width="3" height="7"/>
-        <circle class="tri-dot" cx="15" cy="20.5" r="1.6"/>
-      </svg>
-      PROP&nbsp;65
-    </a>
-    <div class="nav-links">
-      <a href="#workflow">Product</a>
-      <a href="#features">Workflow</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#faq">FAQ</a>
-    </div>
-    <div class="nav-cta">
-      <a href="#faq" class="btn btn-ghost magnetic">Sample Memo</a>
-      <a href="#cta" class="btn btn-solid magnetic">Request Access</a>
-    </div>
-  </nav>
-</header>
-
-<div class="hazard-tape thin"></div>
-
-<!-- ============ EVERYTHING BELOW SHARES ONE CONTINUOUS CORRIDOR SCENE ============ -->
-<main id="scene-wrap">
-
-<!-- ============ HERO ============ -->
-<section class="hero">
-  <div class="hero-grid"></div>
-  <div class="hero-inner">
-    <div>
-      <div class="eyebrow">CAL. HEALTH &amp; SAFETY CODE § 25249.6</div>
-      <h1>
-        <span class="split-line"><span>DRAFT EVERY</span></span>
-        <span class="split-line"><span class="accent">WARNING.</span></span>
-        <span class="split-line"><span>DEFEND EVERY</span></span>
-        <span class="split-line"><span>CLIENT.</span></span>
-      </h1>
-      <p class="hero-sub">AI-generated Prop 65 warning labels and exposure memos, built for law firms managing compliance across hundreds of clients and thousands of SKUs — reviewed and certified by counsel, not replaced by it.</p>
-      <div class="hero-ctas">
-        <a href="#cta" class="btn btn-solid magnetic">Request Early Access</a>
-        <a href="#faq" class="btn btn-ghost magnetic">View a Sample Memo</a>
-      </div>
-    </div>
-
-    <div style="position:relative;">
-      <div class="label-card" id="hero-label">
-        <div class="label-head">
-          <svg class="label-tri" viewBox="0 0 30 26"><path d="M15 2 L28 24 L2 24 Z" fill="none" stroke="#FFC629" stroke-width="2.5"/><rect x="13.5" y="11" width="3" height="7" fill="#FFC629"/><circle cx="15" cy="20.5" r="1.6" fill="#FFC629"/></svg>
-          <div class="label-head-text">Auto-Drafted Warning</div>
-        </div>
-        <div class="label-title">Cancer &amp; Reproductive Harm Warning</div>
-        <div class="label-body">This product contains Bisphenol A (BPA), a chemical known to the State of California to cause reproductive harm. Draft matched to OEHSA listing, dated this filing.</div>
-        <div class="label-foot">
-          <span>REF: SKU-88213-CA</span>
-          <span style="color:#FFC629;">DRAFT v3</span>
-        </div>
-      </div>
-      <div class="chip c1"><span class="dot"></span>OEHSA List Synced</div>
-      <div class="chip c2"><span class="dot"></span>Attorney Review Pending</div>
-      <div class="chip c3"><span class="dot"></span>Risk Score: 8.2</div>
-    </div>
-  </div>
-
-  <div class="scroll-cue"><div class="bar"></div>SCROLL</div>
-</section>
-
-<!-- ============ PROBLEM ============ -->
-<section class="problem">
-  <div class="wrap problem-layout">
-    <div class="problem-sticky">
-      <div class="eyebrow">§ 01 — The Problem</div>
-      <h2 class="section-head-h2" style="font-family:var(--display); font-weight:800; text-transform:uppercase; font-size:clamp(32px,4vw,52px); line-height:1.05;">California's warning law doesn't wait for billable hours.</h2>
-      <p style="color:var(--paper-dim); margin-top:22px; max-width:420px;">Proposition 65 covers over nine hundred chemicals, thousands of client SKUs, and a sixty-day clock that starts the moment a notice arrives. Manual drafting was never built for this volume.</p>
-    </div>
-    <div class="problem-cards">
-      <div class="p-card reveal"><div class="num">01 / 04</div><h3>900+ Listed Chemicals</h3><p>OEHSA updates its list several times a year, and every revision touches active client portfolios — often without anyone noticing until it's too late.</p></div>
-      <div class="p-card reveal"><div class="num">02 / 04</div><h3>The 60-Day Clock</h3><p>A notice of violation gives your client sixty days to respond. Manual review, drafting, and sign-off routinely eat that window before a warning is ever filed.</p></div>
-      <div class="p-card reveal"><div class="num">03 / 04</div><h3>One SKU, Ten Labels</h3><p>Multi-state packaging, multi-retailer requirements, and multi-language warnings multiply a single product into a dozen drafting tasks.</p></div>
-      <div class="p-card reveal"><div class="num">04 / 04</div><h3>Drafting Doesn't Scale</h3><p>Associates rewrite the same warning language client after client, product after product — hours that never make it to strategy or litigation.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ WORKFLOW ============ -->
-<section class="workflow" id="workflow">
-  <div class="wrap">
-    <div class="section-head">
-      <div class="eyebrow">§ 02 — The Workflow</div>
-      <h2>From ingredient list to filed warning, in one pipeline.</h2>
-      <p>Every step is logged. Every draft waits for your sign-off before it becomes a client's warning label.</p>
-    </div>
-    <div class="flow-rail">
-      <div class="flow-line"><div class="flow-line-fill" id="flow-fill"></div></div>
-      <div class="flow-step reveal"><div class="flow-marker">01</div><div><h3>Ingest</h3><p>Upload SKU and ingredient data directly, or connect a client's existing product feed.</p><span class="flow-tag">Batch or API</span></div></div>
-      <div class="flow-step reveal"><div class="flow-marker">02</div><div><h3>Match</h3><p>Every component is cross-referenced against the current OEHSA list, refreshed the day it's published.</p><span class="flow-tag">912 chemicals tracked</span></div></div>
-      <div class="flow-step reveal"><div class="flow-marker">03</div><div><h3>Assess</h3><p>Exposure risk is scored per product, flagging exactly which items require a warning and which don't.</p><span class="flow-tag">Risk scoring</span></div></div>
-      <div class="flow-step reveal"><div class="flow-marker">04</div><div><h3>Draft</h3><p>Label copy, retail signage, and website warnings are generated in the format and language your client needs.</p><span class="flow-tag">Multi-language</span></div></div>
-      <div class="flow-step reveal"><div class="flow-marker">05</div><div><h3>Review</h3><p>Drafts route to the assigned attorney for redline and sign-off — nothing ships without counsel's approval.</p><span class="flow-tag">Attorney gate</span></div></div>
-      <div class="flow-step reveal"><div class="flow-marker">06</div><div><h3>Certify</h3><p>A timestamped, defensible audit trail is logged for every chemical match, draft, and approval.</p><span class="flow-tag">Audit-ready</span></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ FEATURES ============ -->
-<section id="features">
-  <div class="wrap">
-    <div class="section-head">
-      <div class="eyebrow">§ 03 — The Toolkit</div>
-      <h2>Built for firms, not just filings.</h2>
-      <p>Everything an attorney needs to manage Prop 65 exposure across an entire client roster — without redrafting the same warning twice.</p>
-    </div>
-  </div>
-  <div class="wrap" style="padding:0 40px 0;">
-  <div class="feature-grid">
-    <div class="f-card reveal">
-      <svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16v16H4z"/><path d="M4 9h16M9 4v16"/></svg>
-      <h3>OEHSA List Auto-Sync</h3>
-      <p>Every addition, deletion, and NSRL update reflected in your matching engine the same day it's published.</p>
-    </div>
-    <div class="f-card reveal">
-      <svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="8" r="3"/><path d="M2 21c0-3.3 2.7-6 6-6s6 2.7 6 6M11 21c0-3.3 2.7-6 6-6s5 2.7 5 6"/></svg>
-      <h3>Multi-Client Portfolio</h3>
-      <p>Manage warning obligations for every client and every SKU from a single dashboard, not a folder of spreadsheets.</p>
-    </div>
-    <div class="f-card reveal">
-      <svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2 3 6v6c0 5 4 8 9 10 5-2 9-5 9-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
-      <h3>60-Day Notice Response Kit</h3>
-      <p>Turn a notice of violation into a drafted, citation-matched response before the statutory clock runs out.</p>
-    </div>
-    <div class="f-card reveal">
-      <svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19V5a2 2 0 0 1 2-2h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M14 3v5h5M8 13h8M8 17h5"/></svg>
-      <h3>Defensible Audit Trail</h3>
-      <p>Timestamped records of every chemical match, generated draft, and attorney sign-off, ready to produce.</p>
-    </div>
-    <div class="f-card reveal">
-      <svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 4 5.7 4 9s-1.5 6.5-4 9c-2.5-2.5-4-5.7-4-9s1.5-6.5 4-9z"/></svg>
-      <h3>Multi-Language Labels</h3>
-      <p>Warnings drafted in every language a client's packaging or point-of-sale signage requires.</p>
-    </div>
-    <div class="f-card reveal">
-      <svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 17l5-5 4 4 8-9"/><path d="M14 7h6v6"/></svg>
-      <h3>Exposure Risk Scoring</h3>
-      <p>Route only the products that genuinely need review to your attorneys — skip the ones that clearly don't.</p>
-    </div>
-  </div>
-  </div>
-</section>
-
-<!-- ============ STATS ============ -->
-<section id="stats">
-  <div class="wrap">
-    <div class="stats-grid">
-      <div class="stat reveal"><div class="num" data-count="912">0</div><div class="label">Chemicals Tracked</div></div>
-      <div class="stat reveal"><div class="num" data-count="44">0</div><div class="label">Hours Saved / Attorney / Month</div></div>
-      <div class="stat reveal"><div class="num" data-count="5">0</div><div class="label">Avg. Days to Respond to Notice</div></div>
-      <div class="stat reveal"><div class="num" data-count="3400">0</div><div class="label">SKUs Processed Monthly</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ PRACTICE AREAS ============ -->
-<section id="practice">
-  <div class="wrap">
-    <div class="section-head">
-      <div class="eyebrow">§ 04 — Practice Areas</div>
-      <h2>Wherever your clients ship products into California.</h2>
-    </div>
-  </div>
-  <div class="practice-scroll-wrap">
-    <div class="practice-track wrap" id="practice-track">
-      <div class="prac-card"><div class="tag">Retail</div><h3>Cosmetics &amp; Personal Care</h3><p>Fragrance, talc, and preservative exposure across entire product lines.</p></div>
-      <div class="prac-card"><div class="tag">CPG</div><h3>Food &amp; Beverage</h3><p>Acrylamide, lead, and cadmium thresholds across packaged goods.</p></div>
-      <div class="prac-card"><div class="tag">Home</div><h3>Furniture &amp; Home Goods</h3><p>Flame retardants and formaldehyde in upholstery, wood, and foam.</p></div>
-      <div class="prac-card"><div class="tag">Hardware</div><h3>Electronics &amp; Batteries</h3><p>Lead solder, cadmium, and nickel across devices and accessories.</p></div>
-      <div class="prac-card"><div class="tag">Apparel</div><h3>Apparel &amp; Accessories</h3><p>Dyes, coatings, and leather treatments across seasonal collections.</p></div>
-      <div class="prac-card"><div class="tag">Construction</div><h3>Building Materials</h3><p>Silica, resins, and adhesives across contractor and DIY channels.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ CITATION NETWORK ============ -->
-<section id="network">
-  <div class="wrap">
-    <div class="section-head">
-      <div class="eyebrow">§ 05 — How The Model Thinks</div>
-      <h2>Every match traces back to a citation.</h2>
-      <p>No black-box output. Each generated warning links directly to the OEHSA entry and statute that justify it.</p>
-    </div>
-    <div class="network-wrap reveal">
-      <svg id="network-svg" viewBox="0 0 1000 420"></svg>
-    </div>
-  </div>
-</section>
-
-<!-- ============ TESTIMONIALS ============ -->
-<section id="testimonials" style="padding-left:0; padding-right:0;">
-  <div class="wrap" style="margin-bottom:60px;">
-    <div class="eyebrow">§ 06 — From Counsel</div>
-    <h2 style="font-family:var(--display); font-weight:800; text-transform:uppercase; font-size:clamp(34px,4.4vw,58px);">Firms already drafting faster.</h2>
-  </div>
-  <div class="marquee-wrap">
-    <div class="marquee-track" id="marquee">
-      <div class="t-card"><p>"We used to burn two associate-days per client on label language alone. Now the first draft is waiting before the call with the client even ends."</p><div class="t-who"><div class="t-avatar">RC</div><div><div class="t-name">Partner, Reyes &amp; Cole LLP</div><div class="t-role">Consumer Products Practice</div></div></div></div>
-      <div class="t-card"><p>"The audit trail is what sold our compliance committee. Every warning we've filed has a citation and a timestamp behind it."</p><div class="t-who"><div class="t-avatar">WC</div><div><div class="t-name">Counsel, Whitfield Compliance Partners</div><div class="t-role">Regulatory Practice</div></div></div></div>
-      <div class="t-card"><p>"Sixty days used to feel short. Now we're filing responses in under a week and spending the rest of the window on actual strategy."</p><div class="t-who"><div class="t-avatar">MG</div><div><div class="t-name">Associate, Marchetti &amp; Graves</div><div class="t-role">Litigation Defense</div></div></div></div>
-      <div class="t-card"><p>"Our clients ship into six states with six labeling standards. Having one system draft all of them at once changed how we staff this work."</p><div class="t-who"><div class="t-avatar">OP</div><div><div class="t-name">Partner, Osei &amp; Prieto LLP</div><div class="t-role">Product Compliance</div></div></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ PRICING ============ -->
-<section id="pricing">
-  <div class="wrap">
-    <div class="section-head" style="margin-left:auto; margin-right:auto; text-align:center;">
-      <div class="eyebrow" style="justify-content:center;">§ 07 — Pricing</div>
-      <h2>Priced for how firms actually staff this work.</h2>
-    </div>
-    <div class="pricing-grid">
-      <div class="price-card reveal">
-        <div class="price-tag">Solo Practice</div>
-        <div class="price-name">Counsel</div>
-        <div class="price-amt"><b>$490</b> / mo</div>
-        <ul class="price-feats">
-          <li>Up to 3 active clients</li>
-          <li>250 SKU matches / month</li>
-          <li>Standard warning drafting</li>
-          <li>Email support</li>
-        </ul>
-        <a href="#cta" class="btn btn-ghost magnetic" style="width:100%;">Request Access</a>
-      </div>
-      <div class="price-card hi reveal">
-        <div class="price-tag">Most Common</div>
-        <div class="price-name">Firm</div>
-        <div class="price-amt"><b>$1,900</b> / mo</div>
-        <ul class="price-feats">
-          <li>Unlimited clients</li>
-          <li>5,000 SKU matches / month</li>
-          <li>60-Day Notice Response Kit</li>
-          <li>Multi-language label generation</li>
-          <li>Full audit trail export</li>
-        </ul>
-        <a href="#cta" class="btn btn-solid magnetic" style="width:100%;">Request Access</a>
-      </div>
-      <div class="price-card reveal">
-        <div class="price-tag">Am Law Scale</div>
-        <div class="price-name">Enterprise</div>
-        <div class="price-amt"><b>Custom</b></div>
-        <ul class="price-feats">
-          <li>Unlimited SKU matching</li>
-          <li>Dedicated compliance data room</li>
-          <li>Client-facing portal, white-labeled</li>
-          <li>Named implementation lead</li>
-        </ul>
-        <a href="#cta" class="btn btn-ghost magnetic" style="width:100%;">Talk to Us</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ FAQ ============ -->
-<section id="faq">
-  <div class="wrap" style="max-width:820px;">
-    <div class="section-head">
-      <div class="eyebrow">§ 08 — Questions</div>
-      <h2>Straight answers, not marketing.</h2>
-    </div>
-    <div class="faq-list">
-      <div class="faq-item open">
-        <div class="faq-q"><h3>Does this replace attorney review?</h3><div class="faq-icon"></div></div>
-        <div class="faq-a"><p>No. Every draft is generated for an attorney to review, redline, and sign off on. Nothing is filed or sent to a client without a human lawyer's approval — the system exists to remove drafting hours, not judgment.</p></div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q"><h3>How current is the chemical list?</h3><div class="faq-icon"></div></div>
-        <div class="faq-a"><p>The matching engine syncs against OEHSA's published Proposition 65 list, including additions, delistings, and No Significant Risk Level updates, the same day they're issued.</p></div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q"><h3>Can it handle multi-state or multi-retailer variants?</h3><div class="faq-icon"></div></div>
-        <div class="faq-a"><p>Yes. A single SKU can generate separate warning variants by state, retailer packaging standard, and language, all traced back to the same underlying chemical match.</p></div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q"><h3>Is the audit trail actually defensible?</h3><div class="faq-icon"></div></div>
-        <div class="faq-a"><p>Every match, draft, and approval is timestamped and stored with the citation that generated it. It's built to be produced in discovery or shown to a compliance committee without extra reconstruction work.</p></div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q"><h3>What does onboarding look like?</h3><div class="faq-icon"></div></div>
-        <div class="faq-a"><p>Most firms are matching their first client portfolio within a week — connect a product feed or upload a SKU list, and the system runs its first OEHSA match the same day.</p></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ FINAL CTA ============ -->
-<section class="final-cta" id="cta">
-  <div class="final-glow"></div>
-  <div class="wrap" style="position:relative; z-index:1;">
-    <h2>Stop drafting.<br><span class="accent">Start certifying.</span></h2>
-    <p>Join the firms moving Prop 65 compliance out of spreadsheets and into a system built for the statute's actual clock.</p>
-    <a href="#" class="btn btn-solid magnetic" style="padding:18px 38px; font-size:14px;">Request Early Access</a>
-  </div>
-</section>
-
-</main>
-<!-- ============ END OF SHARED CORRIDOR SCENE ============ -->
-
-<div class="hazard-tape"></div>
-
-<footer>
-  <div class="wrap">
-    <div class="footer-top">
-      <div>
-        <div class="footer-brand">
-          <svg width="22" height="20" viewBox="0 0 30 26"><path d="M15 2 L28 24 L2 24 Z" fill="none" stroke="#FFC629" stroke-width="2.5"/><rect x="13.5" y="11" width="3" height="7" fill="#FFC629"/><circle cx="15" cy="20.5" r="1.6" fill="#FFC629"/></svg>
-          PROP&nbsp;65
-        </div>
-        <p class="footer-brand-desc">AI-generated Prop 65 warning labels and exposure memos for law firms and compliance counsel.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Product</h4>
-        <a href="#workflow">Workflow</a>
-        <a href="#features">Toolkit</a>
+  <header>
+    <nav>
+      <a href="#" class="logo">
+        <svg viewBox="0 0 30 26" class="tri-icon">
+          <path class="tri-path" d="M15 2 L28 24 L2 24 Z" />
+          <rect class="tri-bar" x="13.5" y="11" width="3" height="7" />
+          <circle class="tri-dot" cx="15" cy="20.5" r="1.6" />
+        </svg>
+        PROP&nbsp;65
+      </a>
+      <div class="nav-links">
+        <a href="#workflow">Product</a>
+        <a href="#features">Workflow</a>
         <a href="#pricing">Pricing</a>
-      </div>
-      <div class="footer-col">
-        <h4>Company</h4>
-        <a href="#">About</a>
-        <a href="#">Careers</a>
         <a href="#faq">FAQ</a>
       </div>
-      <div class="footer-col">
-        <h4>Legal</h4>
-        <a href="#">Privacy</a>
-        <a href="#">Terms</a>
-        <a href="#">Security</a>
+      <div class="nav-cta">
+        <a href="#faq" class="btn btn-ghost magnetic">Register</a>
+        <a href="#cta" class="btn btn-solid magnetic">LogIn</a>
+      </div>
+    </nav>
+  </header>
+
+  <div class="hazard-tape thin"></div>
+
+  <!-- ============ EVERYTHING BELOW SHARES ONE CONTINUOUS CORRIDOR SCENE ============ -->
+  <main id="scene-wrap">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <div class="hero-grid"></div>
+      <div class="hero-inner">
+        <div>
+          <div class="eyebrow">CAL. HEALTH &amp; SAFETY CODE 25249.6</div>
+          <h1>
+            <span class="split-line"><span>DRAFT EVERY</span></span>
+            <span class="split-line"><span class="accent">WARNING.</span></span>
+            <span class="split-line"><span>DEFEND EVERY</span></span>
+            <span class="split-line"><span>CLIENT.</span></span>
+          </h1>
+          <p class="hero-sub">Prop 65 warning labels and exposure memos, built for law firms managing compliance across
+            hundreds of clients and thousands of SKUs — reviewed and certified by counsel, not replaced by it.</p>
+          <div class="hero-ctas">
+            <a href="#cta" class="btn btn-solid magnetic">Start Your Journey</a>
+            <a href="#faq" class="btn btn-ghost magnetic">View a Sample Memo</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="scroll-cue">
+        <div class="bar"></div>SCROLL
+      </div>
+    </section>
+
+    <!-- ============ PROBLEM ============ -->
+    <section class="problem">
+      <div class="wrap problem-layout">
+        <div class="problem-sticky">
+          <div class="eyebrow"> 01 — The Problem</div>
+          <h2 class="section-head-h2"
+            style="font-family:var(--display); font-weight:800; text-transform:uppercase; font-size:clamp(32px,4vw,52px); line-height:1.05;">
+            California's warning law doesn't wait for billable hours.</h2>
+          <p style="color:var(--paper-dim); margin-top:22px; max-width:420px;">Proposition 65 covers over nine hundred
+            chemicals, thousands of client SKUs, and a sixty-day clock that starts the moment a notice arrives. Manual
+            drafting was never built for this volume.</p>
+        </div>
+        <div class="problem-cards">
+          <div class="p-card reveal">
+            <div class="num">01 / 04</div>
+            <h3>900+ Listed Chemicals</h3>
+            <p>OEHHA updates its list several times a year, and every revision touches active client portfolios — often
+              without anyone noticing until it's too late.</p>
+          </div>
+          <div class="p-card reveal">
+            <div class="num">02 / 04</div>
+            <h3>The 60-Day Clock</h3>
+            <p>A notice of violation gives your client sixty days to respond. Manual review, drafting, and sign-off
+              routinely eat that window before a warning is ever filed.</p>
+          </div>
+          <div class="p-card reveal">
+            <div class="num">03 / 04</div>
+            <h3>One SKU, Ten Labels</h3>
+            <p>Multi-state packaging, multi-retailer requirements, and multi-language warnings multiply a single product
+              into a dozen drafting tasks.</p>
+          </div>
+          <div class="p-card reveal">
+            <div class="num">04 / 04</div>
+            <h3>Drafting Doesn't Scale</h3>
+            <p>Associates rewrite the same warning language client after client, product after product — hours that
+              never make it to strategy or litigation.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ WORKFLOW ============ -->
+    <section class="workflow" id="workflow">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow"> 02 — How Prop 65 Works</div>
+          <h2>From ingredient list to filed warning, in one pipeline.</h2>
+          <p>Every step is logged. Every draft waits for your sign-off before it becomes a client's warning label.</p>
+        </div>
+        <div class="flow-rail">
+          <div class="flow-line">
+            <div class="flow-line-fill" id="flow-fill"></div>
+          </div>
+          <div class="flow-step reveal">
+            <div class="flow-marker">01</div>
+            <div>
+              <h3>Upload Product Information</h3>
+              <p>Upload product details, ingredient lists, or existing compliance documents. Prop65 centralizes
+                everything into one secure workspace.</p>
+            </div>
+          </div>
+          <div class="flow-step reveal">
+            <div class="flow-marker">02</div>
+            <div>
+              <h3>AI Reviews Requirements</h3>
+              <p>AI analyzes product information against California Proposition 65 requirements and highlights potential
+                compliance obligations for review.</p>
+            </div>
+          </div>
+          <div class="flow-step reveal">
+            <div class="flow-marker">03</div>
+            <div>
+              <h3>Generate Draft Warnings</h3>
+              <p>Generate warning language and supporting compliance documents in minutes, ready for attorney review.
+              </p>
+            </div>
+          </div>
+          <div class="flow-step reveal">
+            <div class="flow-marker">04</div>
+            <div>
+              <h3>Review & Approve</h3>
+              <p>Legal professionals review, edit, and approve every draft before anything is finalized.</p>
+            </div>
+          </div>
+          <div class="flow-step reveal">
+            <div class="flow-marker">05</div>
+            <div>
+              <h3>Maintain Compliance</h3>
+              <p>Keep compliance documentation organized with version history, audit records, and updates as regulations
+                evolve.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FEATURES ============ -->
+    <section id="features">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow"> 03 — The Toolkit</div>
+          <h2>Built for firms, not just filings.</h2>
+          <p>Everything legal teams need to streamline Proposition 65 compliance—from product review to warning
+            generation and documentation—in one intelligent platform.</p>
+        </div>
+      </div>
+      <div class="wrap" style="padding:0 40px 0;">
+        <div class="feature-grid">
+          <div class="f-card reveal">
+            <svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M4 4h16v16H4z" />
+              <path d="M4 9h16M9 4v16" />
+            </svg>
+            <h3>OEHHA List Auto-Sync</h3>
+            <p>Stay aligned with the latest Proposition 65 chemical list and regulatory updates through continuously
+              maintained compliance data.</p>
+          </div>
+          <div class="f-card reveal">
+            <svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="8" cy="8" r="3" />
+              <circle cx="17" cy="8" r="3" />
+              <path d="M2 21c0-3.3 2.7-6 6-6s6 2.7 6 6M11 21c0-3.3 2.7-6 6-6s5 2.7 5 6" />
+            </svg>
+            <h3>Multi-Client Portfolio</h3>
+            <p>Manage warning obligations for every client and every SKU from a single dashboard, not a folder of
+              spreadsheets.</p>
+          </div>
+          <div class="f-card reveal">
+            <svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 2 3 6v6c0 5 4 8 9 10 5-2 9-5 9-10V6z" />
+              <path d="M9 12l2 2 4-4" />
+            </svg>
+            <h3>60-Day Notice Response Kit</h3>
+            <p>Organize case information, generate initial draft responses, and accelerate attorney workflows during the
+              60-day statutory notice period.</p>
+          </div>
+          <div class="f-card reveal">
+            <svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M4 19V5a2 2 0 0 1 2-2h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z" />
+              <path d="M14 3v5h5M8 13h8M8 17h5" />
+            </svg>
+            <h3>Defensible Audit Trail</h3>
+            <p>Maintain timestamped records of product reviews, AI-generated drafts, revisions, and approvals to support
+              internal documentation and compliance workflows.</p>
+          </div>
+          <div class="f-card reveal">
+            <svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M3 12h18M12 3c2.5 2.5 4 5.7 4 9s-1.5 6.5-4 9c-2.5-2.5-4-5.7-4-9s1.5-6.5 4-9z" />
+            </svg>
+            <h3>Multi-Language Labels</h3>
+            <p>Generate warning language for multiple languages and packaging formats while maintaining consistency
+              across product lines.</p>
+          </div>
+          <div class="f-card reveal">
+            <svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M3 17l5-5 4 4 8-9" />
+              <path d="M14 7h6v6" />
+            </svg>
+            <h3>AI Compliance Assistant</h3>
+            <p>Ask compliance questions in natural language and receive AI-assisted guidance based on Proposition 65
+              regulations and your product data.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PRACTICE AREAS ============ -->
+    <section id="practice">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow"> 04 — Trusted Across High-Risk Industries</div>
+          <h2>Compliance doesn't stop at one industry. Neither does Prop65.</h2>
+        </div>
+      </div>
+      <div class="practice-scroll-wrap">
+        <div class="practice-track " id="practice-track">
+          <div class="prac-card">
+            <div class="tag">Retail</div>
+            <h3>Cosmetics &amp; Personal Care</h3>
+            <p>Fragrance, talc, and preservative exposure across entire product lines.</p>
+          </div>
+          <div class="prac-card">
+            <div class="tag">CPG</div>
+            <h3>Food &amp; Beverage</h3>
+            <p>Acrylamide, lead, and cadmium thresholds across packaged goods.</p>
+          </div>
+          <div class="prac-card">
+            <div class="tag">Home</div>
+            <h3>Furniture &amp; Home Goods</h3>
+            <p>Flame retardants and formaldehyde in upholstery, wood, and foam.</p>
+          </div>
+          <div class="prac-card">
+            <div class="tag">Hardware</div>
+            <h3>Electronics &amp; Batteries</h3>
+            <p>Help legal teams manage compliance across consumer electronics, batteries, chargers, accessories, and
+              connected devices distributed in California.</p>
+          </div>
+          <div class="prac-card">
+            <div class="tag">Apparel</div>
+            <h3>Apparel &amp; Accessories</h3>
+            <p>Dyes, coatings, and leather treatments across seasonal collections.</p>
+          </div>
+          <div class="prac-card">
+            <div class="tag">Consumer Goods</div>
+            <h3>Children's Products</h3>
+            <p>Monitor toys, baby products, school supplies, and children's accessories for Proposition 65 compliance
+              before they reach California consumers.</p>
+          </div>
+          <div class="prac-card">
+            <div class="tag">Healthcare</div>
+            <h3>Medical Devices</h3>
+            <p>Manage compliance across medical devices, diagnostic equipment, surgical instruments, and healthcare
+              products with AI-assisted documentation.</p>
+          </div>
+          <div class="prac-card">
+            <div class="tag">Automotive</div>
+            <h3>Automotive Parts</h3>
+            <p>Track compliance requirements for replacement parts, vehicle components, batteries, lubricants, and
+              aftermarket accessories sold in California.</p>
+          </div>
+          <div class="prac-card">
+            <div class="tag">Pet Care</div>
+            <h3>Pet Products</h3>
+            <p>Support manufacturers of pet food, toys, accessories, collars, grooming products, and veterinary supplies
+              with streamlined compliance workflows.</p>
+          </div>
+          <div class="prac-card">
+            <div class="tag">Industrial</div>
+            <h3>Industrial Chemicals</h3>
+            <p>Organize compliance documentation for industrial chemicals, coatings, solvents, adhesives, cleaning
+              products, and manufacturing materials.</p>
+          </div>
+          <div class="prac-card">
+            <div class="tag">Outdoor</div>
+            <h3>Sporting Goods</h3>
+            <p>Help brands manage compliance across fitness equipment, outdoor gear, bicycles, camping products,
+              sporting accessories, and recreational equipment.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CITATION NETWORK ============ -->
+    <section id="network">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow"> 05 — Every Recommendation Is Traceable</div>
+          <h2>Every match traces back to a citation.</h2>
+          <p>Every AI-generated recommendation is supported by official Proposition 65 sources. Review the regulations,
+            guidance, and references behind each result before making legal decisions.
+          </p>
+        </div>
+        <div class="network-wrap reveal">
+          <svg id="network-svg" viewBox="0 0 1000 420"></svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TESTIMONIALS ============ -->
+    <div class="marquee-track" id="marquee">
+    </div>
+
+    <!-- ============ PRICING ============ -->
+    <section id="pricing">
+      <div class="wrap">
+        <div class="section-head" style="margin-left:auto; margin-right:auto; text-align:center;">
+          <div class="eyebrow" style="justify-content:center;"> 06 — Pricing</div>
+          <h2>Priced for how firms actually staff this work.</h2>
+        </div>
+        <div class="pricing-grid">
+          <div class="price-card reveal">
+            <div class="price-tag">Solo Practice</div>
+            <div class="price-name">Counsel</div>
+            <div class="price-amt"><b>$40</b> / mo</div>
+            <ul class="price-feats">
+              <li>Up to 3 active clients</li>
+              <li>250 SKU matches / month</li>
+              <li>Standard warning drafting</li>
+              <li>Email support</li>
+            </ul>
+            <a href="#cta" class="btn btn-ghost magnetic" style="width:100%;">Register</a>
+          </div>
+          <div class="price-card hi reveal">
+            <div class="price-tag">Most Common</div>
+            <div class="price-name">Firm</div>
+            <div class="price-amt"><b>$100</b> / mo</div>
+            <ul class="price-feats">
+              <li>Unlimited clients</li>
+              <li>5,000 SKU matches / month</li>
+              <li>60-Day Notice Response Kit</li>
+              <li>Multi-language label generation</li>
+              <li>Full audit trail export</li>
+            </ul>
+            <a href="#cta" class="btn btn-solid magnetic" style="width:100%;">Start Your Journey</a>
+          </div>
+          <div class="price-card reveal">
+            <div class="price-tag">Am Law Scale</div>
+            <div class="price-name">Enterprise</div>
+            <div class="price-amt"><b>Custom</b></div>
+            <ul class="price-feats">
+              <li>Unlimited SKU matching</li>
+              <li>Dedicated compliance data room</li>
+              <li>Client-facing portal, white-labeled</li>
+              <li>Named implementation lead</li>
+            </ul>
+            <a href="#cta" class="btn btn-ghost magnetic" style="width:100%;">Talk to Us</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section id="faq">
+      <div class="wrap" style="max-width:820px;">
+        <div class="section-head">
+          <div class="eyebrow"> 08 — Questions</div>
+          <h2>Straight answers, not marketing.</h2>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item open">
+            <div class="faq-q">
+              <h3>Does this replace attorney review?</h3>
+              <div class="faq-icon"></div>
+            </div>
+            <div class="faq-a">
+              <p>No. Every draft is generated for an attorney to review, redline, and sign off on. Nothing is filed or
+                sent to a client without a human lawyer's approval — the system exists to remove drafting hours, not
+                judgment.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">
+              <h3>How current is the chemical list?</h3>
+              <div class="faq-icon"></div>
+            </div>
+            <div class="faq-a">
+              <p>The matching engine syncs against OEHHA's published Proposition 65 list, including additions,
+                delistings, and No Significant Risk Level updates, the same day they're issued.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">
+              <h3>Can it handle multi-state or multi-retailer variants?</h3>
+              <div class="faq-icon"></div>
+            </div>
+            <div class="faq-a">
+              <p>Yes. A single SKU can generate separate warning variants by state, retailer packaging standard, and
+                language, all traced back to the same underlying chemical match.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">
+              <h3>Is the audit trail actually defensible?</h3>
+              <div class="faq-icon"></div>
+            </div>
+            <div class="faq-a">
+              <p>Every match, draft, and approval is timestamped and stored with the citation that generated it. It's
+                built to be produced in discovery or shown to a compliance committee without extra reconstruction work.
+              </p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">
+              <h3>What does onboarding look like?</h3>
+              <div class="faq-icon"></div>
+            </div>
+            <div class="faq-a">
+              <p>Most firms are matching their first client portfolio within a week — connect a product feed or upload a
+                SKU list, and the system runs its first OEHHA match the same day.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FINAL CTA ============ -->
+    <section class="final-cta" id="cta">
+      <div class="final-glow"></div>
+      <div class="wrap" style="position:relative; z-index:1;">
+        <h2>Stop drafting.<br><span class="accent">Start certifying.</span></h2>
+        <p>Join the firms moving Prop 65 compliance out of spreadsheets and into a system built for the statute's actual
+          clock.</p>
+        <a href="#" class="btn btn-solid magnetic" style="padding:18px 38px; font-size:14px;">Start Your Journey</a>
+      </div>
+    </section>
+
+  </main>
+  <!-- ============ END OF SHARED CORRIDOR SCENE ============ -->
+
+  <!-- <div class="hazard-tape"></div> -->
+
+  <footer>
+    <div class="wrap">
+      <div class="footer-top">
+        <div>
+          <div class="footer-brand">
+            <svg width="22" height="20" viewBox="0 0 30 26">
+              <path d="M15 2 L28 24 L2 24 Z" fill="none" stroke="#FFC629" stroke-width="2.5" />
+              <rect x="13.5" y="11" width="3" height="7" fill="#FFC629" />
+              <circle cx="15" cy="20.5" r="1.6" fill="#FFC629" />
+            </svg>
+            PROP&nbsp;65
+          </div>
+          <p class="footer-brand-desc">Prop 65 warning labels and exposure memos for law firms and compliance counsel.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Product</h4>
+          <a href="#workflow">Workflow</a>
+          <a href="#features">Toolkit</a>
+          <a href="#pricing">Pricing</a>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="#">About</a>
+          <!-- <a href="#">Careers</a> -->
+          <a href="#faq">FAQ</a>
+        </div>
+        <!-- <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Security</a>
+        </div> -->
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Prop65, Inc.</span>
+        <!-- <span class="footer-legal">Prop65 is not a law firm and does not provide legal advice. All generated drafts
+          require review and certification by a licensed attorney before use.</span> -->
       </div>
     </div>
-    <div class="footer-bottom">
-      <span>© 2026 Prop65, Inc.</span>
-      <span class="footer-legal">Prop65 is not a law firm and does not provide legal advice. All generated drafts require review and certification by a licensed attorney before use.</span>
-    </div>
-  </div>
-</footer>
+  </footer>
 
-<script>
-gsap.registerPlugin(ScrollTrigger);
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
 
-/* ---------- cursor glow ---------- */
-const glow = document.getElementById('cursor-glow');
-window.addEventListener('mousemove', e=>{
-  gsap.to(glow, {x:e.clientX, y:e.clientY, duration:0.6, ease:'power3.out'});
-});
+    /* ---------- cursor glow ---------- */
+    const glow = document.getElementById('cursor-glow');
+    window.addEventListener('mousemove', e => {
+      gsap.to(glow, { x: e.clientX, y: e.clientY, duration: 0.6, ease: 'power3.out' });
+    });
 
-/* ---------- magnetic buttons ---------- */
-document.querySelectorAll('.magnetic').forEach(el=>{
-  el.addEventListener('mousemove', e=>{
-    const r = el.getBoundingClientRect();
-    const x = e.clientX - r.left - r.width/2;
-    const y = e.clientY - r.top - r.height/2;
-    gsap.to(el, {x:x*0.3, y:y*0.4, duration:0.4, ease:'power3.out'});
-  });
-  el.addEventListener('mouseleave', ()=>{
-    gsap.to(el, {x:0, y:0, duration:0.5, ease:'elastic.out(1, 0.4)'});
-  });
-});
-
-/* ---------- logo triangle draw ---------- */
-window.addEventListener('load', ()=>{
-  gsap.to('.tri-path', {strokeDashoffset:0, duration:1.4, ease:'power2.out', delay:0.2});
-});
-
-/* ---------- hero text reveal ---------- */
-gsap.set('.split-line > span', {yPercent:110});
-gsap.to('.split-line > span', {yPercent:0, duration:1, ease:'power4.out', stagger:0.08, delay:0.5});
-gsap.from('.hero-sub, .hero-ctas', {opacity:0, y:20, duration:1, delay:1.1, stagger:0.15, ease:'power3.out'});
-gsap.from('.eyebrow', {opacity:0, y:10, duration:0.8, delay:0.15});
-
-/* hero label card entrance + mouse parallax */
-gsap.from('#hero-label', {opacity:0, y:40, scale:0.95, duration:1.2, delay:0.6, ease:'power3.out'});
-gsap.from('.chip', {opacity:0, scale:0.7, duration:0.8, delay:1.3, stagger:0.15, ease:'back.out(2)'});
-
-const heroInner = document.querySelector('.hero-inner');
-heroInner.addEventListener('mousemove', e=>{
-  const r = heroInner.getBoundingClientRect();
-  const x = (e.clientX - r.left)/r.width - 0.5;
-  const y = (e.clientY - r.top)/r.height - 0.5;
-  gsap.to('#hero-label', {rotateY:x*10, rotateX:-y*10, duration:0.6, ease:'power2.out', transformPerspective:800});
-});
-
-/* ---------- generic reveal on scroll ---------- */
-document.querySelectorAll('.reveal').forEach(el=>{
-  gsap.to(el, {
-    opacity:1, y:0, filter:'blur(0px)', duration:1, ease:'power3.out',
-    scrollTrigger:{trigger:el, start:'top 88%'}
-  });
-});
-
-/* ---------- problem cards stacking stagger ---------- */
-gsap.utils.toArray('.p-card').forEach((card,i)=>{
-  gsap.fromTo(card, {y:60, opacity:0, filter:'blur(6px)'}, {
-    y:0, opacity:1, filter:'blur(0px)', duration:0.9, ease:'power3.out',
-    scrollTrigger:{trigger:card, start:'top 85%'}
-  });
-});
-
-/* ---------- workflow line fill + step activation ---------- */
-gsap.to('#flow-fill', {
-  height:'100%', ease:'none',
-  scrollTrigger:{trigger:'.flow-rail', start:'top 60%', end:'bottom 70%', scrub:0.6}
-});
-document.querySelectorAll('.flow-step').forEach(step=>{
-  ScrollTrigger.create({
-    trigger:step, start:'top 60%', end:'bottom 60%',
-    onEnter:()=>step.classList.add('active'),
-    onLeaveBack:()=>step.classList.remove('active')
-  });
-});
-
-/* ---------- stat counters ---------- */
-document.querySelectorAll('.stat .num').forEach(num=>{
-  const target = parseInt(num.dataset.count, 10);
-  ScrollTrigger.create({
-    trigger:num, start:'top 88%', once:true,
-    onEnter:()=>{
-      gsap.fromTo(num, {innerText:0}, {
-        innerText:target, duration:1.8, ease:'power2.out', snap:{innerText:1},
-        onUpdate:function(){ num.textContent = Math.round(this.targets()[0].innerText).toLocaleString(); }
+    /* ---------- magnetic buttons ---------- */
+    document.querySelectorAll('.magnetic').forEach(el => {
+      el.addEventListener('mousemove', e => {
+        const r = el.getBoundingClientRect();
+        const x = e.clientX - r.left - r.width / 2;
+        const y = e.clientY - r.top - r.height / 2;
+        gsap.to(el, { x: x * 0.3, y: y * 0.4, duration: 0.4, ease: 'power3.out' });
       });
-    }
-  });
-});
-
-/* ---------- practice areas horizontal scroll ---------- */
-const track = document.getElementById('practice-track');
-let trackTween = gsap.to(track, {
-  x: () => -(track.scrollWidth - track.parentElement.offsetWidth + 40),
-  ease:'none',
-  scrollTrigger:{
-    trigger:'.practice-scroll-wrap', start:'top 70%', end:()=>'+='+(track.scrollWidth), scrub:0.8
-  }
-});
-
-/* ---------- testimonial marquee (infinite, pause on hover) ---------- */
-const marquee = document.getElementById('marquee');
-marquee.innerHTML += marquee.innerHTML; // duplicate for seamless loop
-let marqueeTween = gsap.to(marquee, {
-  x: () => -(marquee.scrollWidth/2), duration:32, ease:'none', repeat:-1
-});
-marquee.addEventListener('mouseenter', ()=> marqueeTween.pause());
-marquee.addEventListener('mouseleave', ()=> marqueeTween.play());
-
-/* ---------- FAQ accordion ---------- */
-document.querySelectorAll('.faq-item').forEach(item=>{
-  const answer = item.querySelector('.faq-a');
-  if(item.classList.contains('open')) answer.style.maxHeight = answer.scrollHeight + 'px';
-  item.querySelector('.faq-q').addEventListener('click', ()=>{
-    const isOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item.open').forEach(o=>{
-      o.classList.remove('open');
-      o.querySelector('.faq-a').style.maxHeight = 0;
+      el.addEventListener('mouseleave', () => {
+        gsap.to(el, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.4)' });
+      });
     });
-    if(!isOpen){
-      item.classList.add('open');
-      answer.style.maxHeight = answer.scrollHeight + 'px';
-    }
-  });
-});
 
-/* ---------- citation network diagram ---------- */
-(function(){
-  const svg = document.getElementById('network-svg');
-  const ns = 'http://www.w3.org/2000/svg';
-  const statutes = [
-    {x:180,y:90,label:'§25249.6'},
-    {x:180,y:210,label:'OEHSA List'},
-    {x:180,y:330,label:'NSRL Table'}
-  ];
-  const chemicals = [
-    {x:500,y:60,label:'BPA'},
-    {x:500,y:150,label:'Lead'},
-    {x:500,y:270,label:'Cadmium'},
-    {x:500,y:360,label:'Acrylamide'}
-  ];
-  const products = [
-    {x:820,y:110,label:'SKU-4471'},
-    {x:820,y:210,label:'SKU-8213'},
-    {x:820,y:310,label:'SKU-1029'}
-  ];
-
-  function line(a,b){
-    const el = document.createElementNS(ns,'line');
-    el.setAttribute('x1',a.x); el.setAttribute('y1',a.y);
-    el.setAttribute('x2',b.x); el.setAttribute('y2',b.y);
-    el.setAttribute('stroke','rgba(243,238,225,0.16)');
-    el.setAttribute('stroke-width','1');
-    const len = Math.hypot(b.x-a.x, b.y-a.y);
-    el.setAttribute('stroke-dasharray', len);
-    el.setAttribute('stroke-dashoffset', len);
-    svg.appendChild(el);
-    return el;
-  }
-  function node(p, r, fill, strokeOnly){
-    const el = document.createElementNS(ns,'circle');
-    el.setAttribute('cx',p.x); el.setAttribute('cy',p.y); el.setAttribute('r',r);
-    el.setAttribute('fill', strokeOnly ? 'none' : fill);
-    el.setAttribute('stroke', fill);
-    el.setAttribute('stroke-width', strokeOnly ? 1.5 : 0);
-    svg.appendChild(el);
-    return el;
-  }
-  function label(p, text, dy){
-    const el = document.createElementNS(ns,'text');
-    el.setAttribute('x',p.x); el.setAttribute('y',p.y + (dy||22));
-    el.setAttribute('text-anchor','middle');
-    el.setAttribute('class','net-node-label');
-    el.textContent = text;
-    svg.appendChild(el);
-    return el;
-  }
-
-  const allLines = [];
-  statutes.forEach(s=> chemicals.forEach(c=> allLines.push(line(s,c)) ));
-  chemicals.forEach(c=> products.forEach(p=> allLines.push(line(c,p)) ));
-
-  statutes.forEach(s=>{ node(s,5,'#FFC629', true); label(s, s.label); });
-  chemicals.forEach(c=>{ node(c,7,'#FFC629', false); label(c, c.label); });
-  products.forEach(p=>{ node(p,5,'#F3EEE1', true); label(p, p.label); });
-
-  ScrollTrigger.create({
-    trigger:'.network-wrap', start:'top 75%', once:true,
-    onEnter:()=>{
-      gsap.to(allLines, {strokeDashoffset:0, duration:1.4, ease:'power2.out', stagger:0.02});
-    }
-  });
-})();
-
-/* ============================================================
-   SCROLL-DRIVEN 3D CORRIDOR — now spans the entire page.
-   The camera visits one "station" per section, computed from
-   each section's real position in the document, so the dolly
-   always lines up with what's on screen no matter how tall
-   any given section ends up being.
-   ============================================================ */
-(function(){
-  const canvas = document.getElementById('hero-canvas');
-  const sceneWrap = document.getElementById('scene-wrap');
-  if(!window.THREE || !canvas || !sceneWrap) return;
-
-  const AMBER = 0xFFC629;
-  const AMBER_DEEP = 0xB9860A;
-  const INK = 0x0B0B0C;
-
-  let w = window.innerWidth, h = window.innerHeight;
-
-  const renderer = new THREE.WebGLRenderer({canvas, alpha:true, antialias:true});
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.setSize(w, h);
-
-  const scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(INK, 0.032);
-
-  const camera = new THREE.PerspectiveCamera(52, w/h, 0.1, 260);
-  camera.position.set(0, 1.6, 9);
-
-  scene.add(new THREE.AmbientLight(0x1a1a1c, 1.2));
-  const key = new THREE.PointLight(AMBER, 6, 40, 2);
-  key.position.set(0, 3, 0);
-  scene.add(key);
-  const rim = new THREE.PointLight(AMBER_DEEP, 4, 90, 2);
-  rim.position.set(0, 2, -40);
-  scene.add(rim);
-  const rim2 = new THREE.PointLight(AMBER, 3.5, 90, 2);
-  rim2.position.set(0, 2, -85);
-  scene.add(rim2);
-  const rim3 = new THREE.PointLight(AMBER_DEEP, 3.5, 100, 2);
-  rim3.position.set(0, 2, -135);
-  scene.add(rim3);
-
-  /* ---- STATIONS: one per section, computed from real layout ---- */
-  const STATION_SELECTORS = ['.hero', '.problem', '#workflow', '#features', '#stats', '#practice', '#network', '#testimonials', '#pricing', '#faq', '#cta'];
-  function getStations(){
-    return STATION_SELECTORS.map(sel => document.querySelector(sel)).filter(Boolean);
-  }
-  const Z_START = 9;
-  const Z_STEP = -13.5;
-
-  let keyframes = [
-    {p:0, z:Z_START, y:1.6, fov:52},
-    {p:1, z:Z_START + 10*Z_STEP, y:1.0, fov:45}
-  ];
-
-  function buildKeyframes(){
-    const stations = getStations();
-    if(!stations.length) return keyframes;
-    const totalScrollable = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
-    const kfs = stations.map((el,i)=>{
-      const top = el.getBoundingClientRect().top + window.scrollY;
-      let p = top / totalScrollable;
-      p = Math.min(Math.max(p,0),1);
-      return { p, z: Z_START + i*Z_STEP, y: 1.6 - i*0.045, fov: 52 - i*0.55 };
+    /* ---------- logo triangle draw ---------- */
+    window.addEventListener('load', () => {
+      gsap.to('.tri-path', { strokeDashoffset: 0, duration: 1.4, ease: 'power2.out', delay: 0.2 });
     });
-    kfs[0].p = 0;
-    for(let i=1;i<kfs.length;i++){
-      if(kfs[i].p <= kfs[i-1].p) kfs[i].p = kfs[i-1].p + 0.001;
-    }
-    kfs[kfs.length-1].p = Math.max(kfs[kfs.length-1].p, 0.985);
-    return kfs;
-  }
 
-  const DEPTH_END = Z_START + 10*Z_STEP; // deepest point in the corridor
+    /* ---------- hero text reveal ---------- */
+    gsap.set('.split-line > span', { yPercent: 110 });
+    gsap.to('.split-line > span', { yPercent: 0, duration: 1, ease: 'power4.out', stagger: 0.08, delay: 0.5 });
+    gsap.from('.hero-sub, .hero-ctas', { opacity: 0, y: 20, duration: 1, delay: 1.1, stagger: 0.15, ease: 'power3.out' });
+    gsap.from('.eyebrow', { opacity: 0, y: 10, duration: 0.8, delay: 0.15 });
 
-  /* ---- corridor pillars — long enough to cover the full dolly range ---- */
-  const pillarGeo = new THREE.BoxGeometry(0.6, 5, 0.6);
-  const pillarMat = new THREE.MeshStandardMaterial({
-    color:0x0d0d0f, emissive:AMBER, emissiveIntensity:0.35,
-    roughness:0.6, metalness:0.2
-  });
-  const pillars = [];
-  const ROWS = Math.ceil((Z_START - DEPTH_END + 30) / 3.2);
-  for(let i=0;i<ROWS;i++){
-    const z = 6 - i*3.2;
-    const spread = 4.4 + i*0.1;
-    [-1,1].forEach(side=>{
-      const m = new THREE.Mesh(pillarGeo, pillarMat);
-      m.position.set(side*spread, 0.2, z);
-      m.userData.phase = Math.random()*Math.PI*2;
-      scene.add(m);
-      pillars.push(m);
+    /* hero label card entrance + mouse parallax */
+    gsap.from('#hero-label', { opacity: 0, y: 40, scale: 0.95, duration: 1.2, delay: 0.6, ease: 'power3.out' });
+    gsap.from('.chip', { opacity: 0, scale: 0.7, duration: 0.8, delay: 1.3, stagger: 0.15, ease: 'back.out(2)' });
+
+    const heroInner = document.querySelector('.hero-inner');
+    heroInner.addEventListener('mousemove', e => {
+      const r = heroInner.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      gsap.to('#hero-label', { rotateY: x * 10, rotateX: -y * 10, duration: 0.6, ease: 'power2.out', transformPerspective: 800 });
     });
-  }
 
-  /* ---- glowing floor cracks ---- */
-  const tCanvas = document.createElement('canvas');
-  tCanvas.width = 512; tCanvas.height = 512;
-  const tctx = tCanvas.getContext('2d');
-  tctx.fillStyle = '#050506'; tctx.fillRect(0,0,512,512);
-  tctx.strokeStyle = 'rgba(255,198,41,0.9)';
-  function drawCrack(x,y,len,ang,depth){
-    if(depth<=0) return;
-    const x2 = x + Math.cos(ang)*len;
-    const y2 = y + Math.sin(ang)*len;
-    tctx.lineWidth = depth*0.9;
-    tctx.beginPath(); tctx.moveTo(x,y); tctx.lineTo(x2,y2); tctx.stroke();
-    drawCrack(x2,y2,len*0.7,ang+ (Math.random()-0.5)*1.1, depth-1);
-    drawCrack(x2,y2,len*0.7,ang+ (Math.random()-0.5)*1.1, depth-1);
-  }
-  for(let i=0;i<7;i++){
-    drawCrack(Math.random()*512, Math.random()*512, 70+Math.random()*40, Math.random()*Math.PI*2, 4);
-  }
-  const crackTex = new THREE.CanvasTexture(tCanvas);
-  crackTex.wrapS = crackTex.wrapT = THREE.RepeatWrapping;
-  const floorLength = (Z_START - DEPTH_END) + 200;
-  crackTex.repeat.set(3, Math.max(14, Math.round(floorLength/18)));
-
-  const floorGeo = new THREE.PlaneGeometry(60, floorLength);
-  const floorMat = new THREE.MeshStandardMaterial({
-    color:0x08080a, emissive:0xffffff, emissiveMap:crackTex, emissiveIntensity:0.9,
-    roughness:0.9
-  });
-  const floor = new THREE.Mesh(floorGeo, floorMat);
-  floor.rotation.x = -Math.PI/2;
-  floor.position.y = -1.6;
-  floor.position.z = DEPTH_END/2 + 20;
-  scene.add(floor);
-
-  /* pseudo-noise (sum of sines) */
-  function noise(x,y,z,t){
-    return (
-      Math.sin(x*1.3 + t)*Math.cos(y*1.7 - t*0.8) +
-      Math.sin(y*2.1 + t*0.7)*Math.cos(z*1.9 - t*0.5) +
-      Math.sin(z*1.5 + t*0.6)*Math.cos(x*2.3 + t*0.4)
-    ) / 3;
-  }
-
-  /* ---- reusable morphing blob factory ---- */
-  function createBlob(radius, position, color){
-    const geo = new THREE.IcosahedronGeometry(radius, 5);
-    const base = geo.attributes.position.array.slice();
-    const mat = new THREE.MeshStandardMaterial({
-      color:0x1a1206, emissive:color, emissiveIntensity:0.55,
-      roughness:0.35, metalness:0.4, flatShading:true
+    /* ---------- generic reveal on scroll ---------- */
+    document.querySelectorAll('.reveal').forEach(el => {
+      gsap.to(el, {
+        opacity: 1, y: 0, filter: 'blur(0px)', duration: 1, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 88%' }
+      });
     });
-    const mesh = new THREE.Mesh(geo, mat);
-    mesh.position.copy(position);
-    scene.add(mesh);
 
-    const wireMat = new THREE.MeshBasicMaterial({color, wireframe:true, transparent:true, opacity:0.12});
-    const wire = new THREE.Mesh(geo, wireMat);
-    wire.position.copy(position);
-    wire.scale.setScalar(1.04);
-    scene.add(wire);
+    /* ---------- problem cards stacking stagger ---------- */
+    gsap.utils.toArray('.p-card').forEach((card, i) => {
+      gsap.fromTo(card, { y: 60, opacity: 0, filter: 'blur(6px)' }, {
+        y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.9, ease: 'power3.out',
+        scrollTrigger: { trigger: card, start: 'top 85%' }
+      });
+    });
 
-    return {
-      mesh, wire, geo, base, radius,
-      update(t, seedOffset, ampMul){
-        const pos = geo.attributes.position;
-        for(let i=0;i<pos.count;i++){
-          const ix = i*3;
-          const bx = base[ix], by = base[ix+1], bz = base[ix+2];
-          const len = Math.sqrt(bx*bx+by*by+bz*bz) || 1;
-          const nx = bx/len, ny = by/len, nz = bz/len;
-          const n = noise(nx*2, ny*2, nz*2 + seedOffset, t*0.6);
-          const r = radius + n*0.22*ampMul;
-          pos.setXYZ(i, nx*r, ny*r, nz*r);
+    /* ---------- workflow line fill + step activation ---------- */
+    gsap.to('#flow-fill', {
+      height: '100%', ease: 'none',
+      scrollTrigger: { trigger: '.flow-rail', start: 'top 60%', end: 'bottom 70%', scrub: 0.6 }
+    });
+    document.querySelectorAll('.flow-step').forEach(step => {
+      ScrollTrigger.create({
+        trigger: step, start: 'top 60%', end: 'bottom 60%',
+        onEnter: () => step.classList.add('active'),
+        onLeaveBack: () => step.classList.remove('active')
+      });
+    });
+
+    /* ---------- stat counters ---------- */
+    document.querySelectorAll('.stat .num').forEach(num => {
+      const target = parseInt(num.dataset.count, 10);
+      ScrollTrigger.create({
+        trigger: num, start: 'top 88%', once: true,
+        onEnter: () => {
+          gsap.fromTo(num, { innerText: 0 }, {
+            innerText: target, duration: 1.8, ease: 'power2.out', snap: { innerText: 1 },
+            onUpdate: function () { num.textContent = Math.round(this.targets()[0].innerText).toLocaleString(); }
+          });
         }
-        pos.needsUpdate = true;
-        geo.computeVertexNormals();
-        mesh.rotation.y = t*0.18;
-        mesh.rotation.x = Math.sin(t*0.2)*0.15;
-        wire.rotation.copy(mesh.rotation);
-      }
-    };
-  }
-
-  /* blob A — near the hero opening */
-  const blobA = createBlob(1.35, new THREE.Vector3(0, 1.1, 1.5), AMBER);
-  /* blob B — mid-corridor waypoint (roughly around Toolkit / Stats) */
-  const blobB = createBlob(1.6, new THREE.Vector3(0, 1.2, Z_START + 4*Z_STEP), AMBER);
-  blobB.mesh.scale.setScalar(0.001); blobB.wire.scale.setScalar(0.001);
-  /* blob C — deep waypoint (roughly around Pricing / FAQ) */
-  const blobC = createBlob(1.8, new THREE.Vector3(0, 1.15, Z_START + 8*Z_STEP), AMBER);
-  blobC.mesh.scale.setScalar(0.001); blobC.wire.scale.setScalar(0.001);
-
-  /* ---- particles, spanning the full corridor depth ---- */
-  const PCOUNT = window.innerWidth < 700 ? 420 : 900;
-  const pGeo = new THREE.BufferGeometry();
-  const pPos = new Float32Array(PCOUNT*3);
-  for(let i=0;i<PCOUNT;i++){
-    pPos[i*3] = (Math.random()-0.5)*22;
-    pPos[i*3+1] = Math.random()*8 - 1.5;
-    pPos[i*3+2] = Math.random()*(DEPTH_END - 30 - 6) + 6;
-  }
-  pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
-  const pMat = new THREE.PointsMaterial({color:AMBER, size:0.03, transparent:true, opacity:0.65});
-  const points = new THREE.Points(pGeo, pMat);
-  scene.add(points);
-
-  /* ---- mouse parallax ---- */
-  let mouseX = 0, mouseY = 0;
-  window.addEventListener('mousemove', e=>{
-    mouseX = (e.clientX / window.innerWidth - 0.5);
-    mouseY = (e.clientY / window.innerHeight - 0.5);
-  });
-
-  function resize(){
-    w = window.innerWidth; h = window.innerHeight;
-    camera.aspect = w/h;
-    camera.updateProjectionMatrix();
-    renderer.setSize(w,h);
-  }
-  window.addEventListener('resize', resize);
-
-  function interp(progress){
-    let a = keyframes[0], b = keyframes[keyframes.length-1];
-    for(let i=0;i<keyframes.length-1;i++){
-      if(progress >= keyframes[i].p && progress <= keyframes[i+1].p){
-        a = keyframes[i]; b = keyframes[i+1]; break;
-      }
-    }
-    const span = (b.p - a.p) || 1;
-    const local = Math.min(Math.max((progress - a.p)/span, 0), 1);
-    return {
-      z: THREE.MathUtils.lerp(a.z, b.z, local),
-      y: THREE.MathUtils.lerp(a.y, b.y, local),
-      fov: THREE.MathUtils.lerp(a.fov, b.fov, local)
-    };
-  }
-  function bump(p, inStart, inEnd, outStart, outEnd){
-    if(p<=inStart) return 0;
-    if(p<inEnd) return (p-inStart)/(inEnd-inStart);
-    if(p<=outStart) return 1;
-    if(p<outEnd) return 1-(p-outStart)/(outEnd-outStart);
-    return 0;
-  }
-
-  let scrollProgress = 0;
-  let sceneOpacity = 1;
-
-  ScrollTrigger.create({
-    trigger: sceneWrap, start:'top top', end:'bottom bottom', scrub:0.5,
-    onUpdate: self=>{ scrollProgress = self.progress; }
-  });
-  /* gentle fade as the reader moves through the footer, closing the scene out */
-  ScrollTrigger.create({
-    trigger:'footer', start:'top bottom', end:'bottom bottom', scrub:0.4,
-    onUpdate: self=>{ sceneOpacity = 1 - self.progress*0.85; }
-  });
-
-  window.addEventListener('load', ()=>{
-    keyframes = buildKeyframes();
-    ScrollTrigger.refresh();
-  });
-  let resizeTimer;
-  window.addEventListener('resize', ()=>{
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(()=>{ keyframes = buildKeyframes(); ScrollTrigger.refresh(); }, 250);
-  });
-
-  const clock = new THREE.Clock();
-  function animate(){
-    const t = clock.getElapsedTime();
-
-    blobA.update(t, 0, 1);
-    blobB.update(t, 12, 1.3);
-    blobC.update(t, 24, 1.2);
-
-    const revealB = bump(scrollProgress, 0.14, 0.26, 0.42, 0.55);
-    blobB.mesh.scale.setScalar(THREE.MathUtils.lerp(0.001, 1, revealB));
-    blobB.wire.scale.setScalar(THREE.MathUtils.lerp(0.001, 1.04, revealB));
-
-    const revealC = bump(scrollProgress, 0.62, 0.74, 1.0, 1.0);
-    blobC.mesh.scale.setScalar(THREE.MathUtils.lerp(0.001, 1, revealC));
-    blobC.wire.scale.setScalar(THREE.MathUtils.lerp(0.001, 1.04, revealC));
-
-    const hideA = Math.min(Math.max((scrollProgress-0.06)/0.14,0),1);
-    blobA.mesh.scale.setScalar(THREE.MathUtils.lerp(1, 0.55, hideA));
-    blobA.wire.scale.setScalar(THREE.MathUtils.lerp(1.04, 0.58, hideA));
-
-    pillars.forEach(p=>{
-      p.material.emissiveIntensity = 0.28 + Math.sin(t*1.4 + p.userData.phase)*0.12;
+      });
     });
 
-    crackTex.offset.y = (t*0.012) % 1;
-    points.rotation.y = t*0.01;
+    /* ---------- practice areas horizontal scroll ---------- */
 
-    const k = interp(scrollProgress);
-    camera.fov += (k.fov - camera.fov) * 0.08;
-    camera.updateProjectionMatrix();
-    camera.position.x += ((mouseX*1.2) - camera.position.x) * 0.04;
-    camera.position.z += (k.z - camera.position.z) * 0.08;
-    camera.position.y += ((k.y - mouseY*0.6) - camera.position.y) * 0.06;
-    camera.lookAt(0, camera.position.y - 0.5, camera.position.z - 8);
+    /* ---------- testimonial marquee (infinite, pause on hover) ---------- */
+    const marquee = document.getElementById('marquee');
+    marquee.innerHTML += marquee.innerHTML; // duplicate for seamless loop
+    let marqueeTween = gsap.to(marquee, {
+      x: () => -(marquee.scrollWidth / 2), duration: 32, ease: 'none', repeat: -1
+    });
+    marquee.addEventListener('mouseenter', () => marqueeTween.pause());
+    marquee.addEventListener('mouseleave', () => marqueeTween.play());
 
-    renderer.domElement.style.opacity = Math.max(sceneOpacity, 0);
-    renderer.render(scene, camera);
-    requestAnimationFrame(animate);
-  }
-  animate();
-})();
+    /* ---------- FAQ accordion ---------- */
+    document.querySelectorAll('.faq-item').forEach(item => {
+      const answer = item.querySelector('.faq-a');
+      if (item.classList.contains('open')) answer.style.maxHeight = answer.scrollHeight + 'px';
+      item.querySelector('.faq-q').addEventListener('click', () => {
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item.open').forEach(o => {
+          o.classList.remove('open');
+          o.querySelector('.faq-a').style.maxHeight = 0;
+        });
+        if (!isOpen) {
+          item.classList.add('open');
+          answer.style.maxHeight = answer.scrollHeight + 'px';
+        }
+      });
+    });
 
-ScrollTrigger.refresh();
-</script>
+    /* ---------- citation network diagram ---------- */
+    (function () {
+      const svg = document.getElementById('network-svg');
+      const ns = 'http://www.w3.org/2000/svg';
+      const statutes = [
+        { x: 180, y: 90, label: ' 25249.6' },
+        { x: 180, y: 210, label: 'OEHHA List' },
+        { x: 180, y: 330, label: 'NSRL Table' }
+      ];
+      const chemicals = [
+        { x: 500, y: 60, label: 'BPA' },
+        { x: 500, y: 150, label: 'Lead' },
+        { x: 500, y: 270, label: 'Cadmium' },
+        { x: 500, y: 360, label: 'Acrylamide' }
+      ];
+      const products = [
+        { x: 820, y: 110, label: 'SKU-4471' },
+        { x: 820, y: 210, label: 'SKU-8213' },
+        { x: 820, y: 310, label: 'SKU-1029' }
+      ];
+
+      function line(a, b) {
+        const el = document.createElementNS(ns, 'line');
+        el.setAttribute('x1', a.x); el.setAttribute('y1', a.y);
+        el.setAttribute('x2', b.x); el.setAttribute('y2', b.y);
+        el.setAttribute('stroke', 'rgba(243,238,225,0.16)');
+        el.setAttribute('stroke-width', '1');
+        const len = Math.hypot(b.x - a.x, b.y - a.y);
+        el.setAttribute('stroke-dasharray', len);
+        el.setAttribute('stroke-dashoffset', len);
+        svg.appendChild(el);
+        return el;
+      }
+      function node(p, r, fill, strokeOnly) {
+        const el = document.createElementNS(ns, 'circle');
+        el.setAttribute('cx', p.x); el.setAttribute('cy', p.y); el.setAttribute('r', r);
+        el.setAttribute('fill', strokeOnly ? 'none' : fill);
+        el.setAttribute('stroke', fill);
+        el.setAttribute('stroke-width', strokeOnly ? 1.5 : 0);
+        svg.appendChild(el);
+        return el;
+      }
+      function label(p, text, dy) {
+        const el = document.createElementNS(ns, 'text');
+        el.setAttribute('x', p.x); el.setAttribute('y', p.y + (dy || 22));
+        el.setAttribute('text-anchor', 'middle');
+        el.setAttribute('class', 'net-node-label');
+        el.textContent = text;
+        svg.appendChild(el);
+        return el;
+      }
+
+      const allLines = [];
+      statutes.forEach(s => chemicals.forEach(c => allLines.push(line(s, c))));
+      chemicals.forEach(c => products.forEach(p => allLines.push(line(c, p))));
+
+      statutes.forEach(s => { node(s, 5, '#FFC629', true); label(s, s.label); });
+      chemicals.forEach(c => { node(c, 7, '#FFC629', false); label(c, c.label); });
+      products.forEach(p => { node(p, 5, '#F3EEE1', true); label(p, p.label); });
+
+      ScrollTrigger.create({
+        trigger: '.network-wrap', start: 'top 75%', once: true,
+        onEnter: () => {
+          gsap.to(allLines, { strokeDashoffset: 0, duration: 1.4, ease: 'power2.out', stagger: 0.02 });
+        }
+      });
+    })();
+
+    /* ============================================================
+       SCROLL-DRIVEN 3D CORRIDOR — now spans the entire page.
+       The camera visits one "station" per section, computed from
+       each section's real position in the document, so the dolly
+       always lines up with what's on screen no matter how tall
+       any given section ends up being.
+       ============================================================ */
+    (function () {
+      const canvas = document.getElementById('hero-canvas');
+      const sceneWrap = document.getElementById('scene-wrap');
+      if (!window.THREE || !canvas || !sceneWrap) return;
+
+      const AMBER = 0xFFC629;
+      const AMBER_DEEP = 0xB9860A;
+      const INK = 0x0B0B0C;
+
+      let w = window.innerWidth, h = window.innerHeight;
+
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(w, h);
+
+      const scene = new THREE.Scene();
+      scene.fog = new THREE.FogExp2(INK, 0.032);
+
+      const camera = new THREE.PerspectiveCamera(52, w / h, 0.1, 260);
+      camera.position.set(0, 1.6, 9);
+
+      scene.add(new THREE.AmbientLight(0x1a1a1c, 1.2));
+      const key = new THREE.PointLight(AMBER, 6, 40, 2);
+      key.position.set(0, 3, 0);
+      scene.add(key);
+      const rim = new THREE.PointLight(AMBER_DEEP, 4, 90, 2);
+      rim.position.set(0, 2, -40);
+      scene.add(rim);
+      const rim2 = new THREE.PointLight(AMBER, 3.5, 90, 2);
+      rim2.position.set(0, 2, -85);
+      scene.add(rim2);
+      const rim3 = new THREE.PointLight(AMBER_DEEP, 3.5, 100, 2);
+      rim3.position.set(0, 2, -135);
+      scene.add(rim3);
+
+      /* ---- STATIONS: one per section, computed from real layout ---- */
+      const STATION_SELECTORS = ['.hero', '.problem', '#workflow', '#features', '#stats', '#practice', '#network', '#testimonials', '#pricing', '#faq', '#cta'];
+      function getStations() {
+        return STATION_SELECTORS.map(sel => document.querySelector(sel)).filter(Boolean);
+      }
+      const Z_START = 9;
+      const Z_STEP = -13.5;
+
+      let keyframes = [
+        { p: 0, z: Z_START, y: 1.6, fov: 52 },
+        { p: 1, z: Z_START + 10 * Z_STEP, y: 1.0, fov: 45 }
+      ];
+
+      function buildKeyframes() {
+        const stations = getStations();
+        if (!stations.length) return keyframes;
+        const totalScrollable = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+        const kfs = stations.map((el, i) => {
+          const top = el.getBoundingClientRect().top + window.scrollY;
+          let p = top / totalScrollable;
+          p = Math.min(Math.max(p, 0), 1);
+          return { p, z: Z_START + i * Z_STEP, y: 1.6 - i * 0.045, fov: 52 - i * 0.55 };
+        });
+        kfs[0].p = 0;
+        for (let i = 1; i < kfs.length; i++) {
+          if (kfs[i].p <= kfs[i - 1].p) kfs[i].p = kfs[i - 1].p + 0.001;
+        }
+        kfs[kfs.length - 1].p = Math.max(kfs[kfs.length - 1].p, 0.985);
+        return kfs;
+      }
+
+      const DEPTH_END = Z_START + 10 * Z_STEP; // deepest point in the corridor
+
+      /* ---- corridor pillars — long enough to cover the full dolly range ---- */
+      const pillarGeo = new THREE.BoxGeometry(0.6, 5, 0.6);
+      const pillarMat = new THREE.MeshStandardMaterial({
+        color: 0x0d0d0f, emissive: AMBER, emissiveIntensity: 0.35,
+        roughness: 0.6, metalness: 0.2
+      });
+      const pillars = [];
+      const ROWS = Math.ceil((Z_START - DEPTH_END + 30) / 3.2);
+      for (let i = 0; i < ROWS; i++) {
+        const z = 6 - i * 3.2;
+        const spread = 4.4 + i * 0.1;
+        [-1, 1].forEach(side => {
+          const m = new THREE.Mesh(pillarGeo, pillarMat);
+          m.position.set(side * spread, 0.2, z);
+          m.userData.phase = Math.random() * Math.PI * 2;
+          scene.add(m);
+          pillars.push(m);
+        });
+      }
+
+      /* ---- glowing floor cracks ---- */
+      const tCanvas = document.createElement('canvas');
+      tCanvas.width = 512; tCanvas.height = 512;
+      const tctx = tCanvas.getContext('2d');
+      tctx.fillStyle = '#050506'; tctx.fillRect(0, 0, 512, 512);
+      tctx.strokeStyle = 'rgba(255,198,41,0.9)';
+      function drawCrack(x, y, len, ang, depth) {
+        if (depth <= 0) return;
+        const x2 = x + Math.cos(ang) * len;
+        const y2 = y + Math.sin(ang) * len;
+        tctx.lineWidth = depth * 0.9;
+        tctx.beginPath(); tctx.moveTo(x, y); tctx.lineTo(x2, y2); tctx.stroke();
+        drawCrack(x2, y2, len * 0.7, ang + (Math.random() - 0.5) * 1.1, depth - 1);
+        drawCrack(x2, y2, len * 0.7, ang + (Math.random() - 0.5) * 1.1, depth - 1);
+      }
+      for (let i = 0; i < 7; i++) {
+        drawCrack(Math.random() * 512, Math.random() * 512, 70 + Math.random() * 40, Math.random() * Math.PI * 2, 4);
+      }
+      const crackTex = new THREE.CanvasTexture(tCanvas);
+      crackTex.wrapS = crackTex.wrapT = THREE.RepeatWrapping;
+      const floorLength = (Z_START - DEPTH_END) + 200;
+      crackTex.repeat.set(3, Math.max(14, Math.round(floorLength / 18)));
+
+      const floorGeo = new THREE.PlaneGeometry(60, floorLength);
+      const floorMat = new THREE.MeshStandardMaterial({
+        color: 0x08080a, emissive: 0xffffff, emissiveMap: crackTex, emissiveIntensity: 0.9,
+        roughness: 0.9
+      });
+      const floor = new THREE.Mesh(floorGeo, floorMat);
+      floor.rotation.x = -Math.PI / 2;
+      floor.position.y = -1.6;
+      floor.position.z = DEPTH_END / 2 + 20;
+      scene.add(floor);
+
+      /* pseudo-noise (sum of sines) */
+      function noise(x, y, z, t) {
+        return (
+          Math.sin(x * 1.3 + t) * Math.cos(y * 1.7 - t * 0.8) +
+          Math.sin(y * 2.1 + t * 0.7) * Math.cos(z * 1.9 - t * 0.5) +
+          Math.sin(z * 1.5 + t * 0.6) * Math.cos(x * 2.3 + t * 0.4)
+        ) / 3;
+      }
+
+      /* ---- reusable morphing blob factory ---- */
+      function createBlob(radius, position, color) {
+        const geo = new THREE.IcosahedronGeometry(radius, 5);
+        const base = geo.attributes.position.array.slice();
+        const mat = new THREE.MeshStandardMaterial({
+          color: 0x1a1206, emissive: color, emissiveIntensity: 0.55,
+          roughness: 0.35, metalness: 0.4, flatShading: true
+        });
+        const mesh = new THREE.Mesh(geo, mat);
+        mesh.position.copy(position);
+        scene.add(mesh);
+
+        const wireMat = new THREE.MeshBasicMaterial({ color, wireframe: true, transparent: true, opacity: 0.12 });
+        const wire = new THREE.Mesh(geo, wireMat);
+        wire.position.copy(position);
+        wire.scale.setScalar(1.04);
+        scene.add(wire);
+
+        return {
+          mesh, wire, geo, base, radius,
+          update(t, seedOffset, ampMul) {
+            const pos = geo.attributes.position;
+            for (let i = 0; i < pos.count; i++) {
+              const ix = i * 3;
+              const bx = base[ix], by = base[ix + 1], bz = base[ix + 2];
+              const len = Math.sqrt(bx * bx + by * by + bz * bz) || 1;
+              const nx = bx / len, ny = by / len, nz = bz / len;
+              const n = noise(nx * 2, ny * 2, nz * 2 + seedOffset, t * 0.6);
+              const r = radius + n * 0.22 * ampMul;
+              pos.setXYZ(i, nx * r, ny * r, nz * r);
+            }
+            pos.needsUpdate = true;
+            geo.computeVertexNormals();
+            mesh.rotation.y = t * 0.18;
+            mesh.rotation.x = Math.sin(t * 0.2) * 0.15;
+            wire.rotation.copy(mesh.rotation);
+          }
+        };
+      }
+
+      /* blob A — near the hero opening */
+      const blobA = createBlob(1.35, new THREE.Vector3(0, 1.1, 1.5), AMBER);
+      /* blob B — mid-corridor waypoint (roughly around Toolkit / Stats) */
+      const blobB = createBlob(1.6, new THREE.Vector3(0, 1.2, Z_START + 4 * Z_STEP), AMBER);
+      blobB.mesh.scale.setScalar(0.001); blobB.wire.scale.setScalar(0.001);
+      /* blob C — deep waypoint (roughly around Pricing / FAQ) */
+      const blobC = createBlob(1.8, new THREE.Vector3(0, 1.15, Z_START + 8 * Z_STEP), AMBER);
+      blobC.mesh.scale.setScalar(0.001); blobC.wire.scale.setScalar(0.001);
+
+      /* ---- particles, spanning the full corridor depth ---- */
+      const PCOUNT = window.innerWidth < 700 ? 420 : 900;
+      const pGeo = new THREE.BufferGeometry();
+      const pPos = new Float32Array(PCOUNT * 3);
+      for (let i = 0; i < PCOUNT; i++) {
+        pPos[i * 3] = (Math.random() - 0.5) * 22;
+        pPos[i * 3 + 1] = Math.random() * 8 - 1.5;
+        pPos[i * 3 + 2] = Math.random() * (DEPTH_END - 30 - 6) + 6;
+      }
+      pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+      const pMat = new THREE.PointsMaterial({ color: AMBER, size: 0.03, transparent: true, opacity: 0.65 });
+      const points = new THREE.Points(pGeo, pMat);
+      scene.add(points);
+
+      /* ---- mouse parallax ---- */
+      let mouseX = 0, mouseY = 0;
+      window.addEventListener('mousemove', e => {
+        mouseX = (e.clientX / window.innerWidth - 0.5);
+        mouseY = (e.clientY / window.innerHeight - 0.5);
+      });
+
+      function resize() {
+        w = window.innerWidth; h = window.innerHeight;
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w, h);
+      }
+      window.addEventListener('resize', resize);
+
+      function interp(progress) {
+        let a = keyframes[0], b = keyframes[keyframes.length - 1];
+        for (let i = 0; i < keyframes.length - 1; i++) {
+          if (progress >= keyframes[i].p && progress <= keyframes[i + 1].p) {
+            a = keyframes[i]; b = keyframes[i + 1]; break;
+          }
+        }
+        const span = (b.p - a.p) || 1;
+        const local = Math.min(Math.max((progress - a.p) / span, 0), 1);
+        return {
+          z: THREE.MathUtils.lerp(a.z, b.z, local),
+          y: THREE.MathUtils.lerp(a.y, b.y, local),
+          fov: THREE.MathUtils.lerp(a.fov, b.fov, local)
+        };
+      }
+      function bump(p, inStart, inEnd, outStart, outEnd) {
+        if (p <= inStart) return 0;
+        if (p < inEnd) return (p - inStart) / (inEnd - inStart);
+        if (p <= outStart) return 1;
+        if (p < outEnd) return 1 - (p - outStart) / (outEnd - outStart);
+        return 0;
+      }
+
+      let scrollProgress = 0;
+      let sceneOpacity = 1;
+
+      ScrollTrigger.create({
+        trigger: sceneWrap, start: 'top top', end: 'bottom bottom', scrub: 0.5,
+        onUpdate: self => { scrollProgress = self.progress; }
+      });
+      /* gentle fade as the reader moves through the footer, closing the scene out */
+      ScrollTrigger.create({
+        trigger: 'footer', start: 'top bottom', end: 'bottom bottom', scrub: 0.4,
+        onUpdate: self => { sceneOpacity = 1 - self.progress * 0.85; }
+      });
+
+      window.addEventListener('load', () => {
+        keyframes = buildKeyframes();
+        ScrollTrigger.refresh();
+      });
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => { keyframes = buildKeyframes(); ScrollTrigger.refresh(); }, 250);
+      });
+
+      const clock = new THREE.Clock();
+      function animate() {
+        const t = clock.getElapsedTime();
+
+        blobA.update(t, 0, 1);
+        blobB.update(t, 12, 1.3);
+        blobC.update(t, 24, 1.2);
+
+        const revealB = bump(scrollProgress, 0.14, 0.26, 0.42, 0.55);
+        blobB.mesh.scale.setScalar(THREE.MathUtils.lerp(0.001, 1, revealB));
+        blobB.wire.scale.setScalar(THREE.MathUtils.lerp(0.001, 1.04, revealB));
+
+        const revealC = bump(scrollProgress, 0.62, 0.74, 1.0, 1.0);
+        blobC.mesh.scale.setScalar(THREE.MathUtils.lerp(0.001, 1, revealC));
+        blobC.wire.scale.setScalar(THREE.MathUtils.lerp(0.001, 1.04, revealC));
+
+        const hideA = Math.min(Math.max((scrollProgress - 0.06) / 0.14, 0), 1);
+        blobA.mesh.scale.setScalar(THREE.MathUtils.lerp(1, 0.55, hideA));
+        blobA.wire.scale.setScalar(THREE.MathUtils.lerp(1.04, 0.58, hideA));
+
+        pillars.forEach(p => {
+          p.material.emissiveIntensity = 0.28 + Math.sin(t * 1.4 + p.userData.phase) * 0.12;
+        });
+
+        crackTex.offset.y = (t * 0.012) % 1;
+        points.rotation.y = t * 0.01;
+
+        const k = interp(scrollProgress);
+        camera.fov += (k.fov - camera.fov) * 0.08;
+        camera.updateProjectionMatrix();
+        camera.position.x += ((mouseX * 1.2) - camera.position.x) * 0.04;
+        camera.position.z += (k.z - camera.position.z) * 0.08;
+        camera.position.y += ((k.y - mouseY * 0.6) - camera.position.y) * 0.06;
+        camera.lookAt(0, camera.position.y - 0.5, camera.position.z - 8);
+
+        renderer.domElement.style.opacity = Math.max(sceneOpacity, 0);
+        renderer.render(scene, camera);
+        requestAnimationFrame(animate);
+      }
+      animate();
+
+    })();
+
+    ScrollTrigger.refresh();
+  </script>
 </body>
+
 </html>
