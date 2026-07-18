@@ -13,7 +13,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&display=swap"
     rel="stylesheet">
-
+  <link rel="stylesheet" href="auth.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -56,6 +56,33 @@
       line-height: 1.6;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
+    }
+
+
+    body.page-transition {
+
+      animation: fadeOut .5s ease forwards;
+
+    }
+
+    @keyframes fadeOut {
+
+      from {
+
+        opacity: 1;
+
+        transform: scale(1);
+
+      }
+
+      to {
+
+        opacity: 0;
+
+        transform: scale(.98);
+
+      }
+
     }
 
     ::selection {
@@ -872,22 +899,22 @@
       /* already there — this is now the only thing controlling the gap */
     }
 
-    .prac-card{
-    position:relative;
-    overflow:hidden;
+    .prac-card {
+      position: relative;
+      overflow: hidden;
 
-    min-height:340px;
+      min-height: 340px;
 
-    display:flex;
-    flex-direction:column;
-    justify-content:flex-start;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
 
-    padding:38px;
+      padding: 38px;
 
-    /* REMOVE THESE */
-    /* flex:0 0 340px; */
+      /* REMOVE THESE */
+      /* flex:0 0 340px; */
 
-    width:100%;
+      width: 100%;
       background:
         radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
           rgba(37, 99, 235, .10),
@@ -1503,6 +1530,10 @@
         display: none;
       }
     }
+
+    /* ==========================================================
+   AUTH MODAL
+   ========================================================== */
   </style>
 </head>
 
@@ -1529,11 +1560,184 @@
         <a href="#faq">FAQ</a>
       </div>
       <div class="nav-cta">
-        <a href="#faq" class="btn btn-ghost magnetic">Register</a>
-        <a href="#cta" class="btn btn-solid magnetic">LogIn</a>
+        <a href="#" id="registerBtn" class="btn btn-ghost magnetic">Register</a>
+        <a href="#" id="loginBtn" class="btn btn-solid magnetic">LogIn</a>
       </div>
     </nav>
   </header>
+  <!-- ==========================================================AUTH MODAL========================================================== -->
+
+  <div class="auth-overlay" id="authOverlay">
+
+    <div class="auth-modal" id="authModal">
+
+      <!-- Close Button -->
+
+      <button class="auth-close" id="closeAuth">
+        ✕
+      </button>
+
+      <!-- LEFT SIDE -->
+
+      <div class="auth-left">
+
+        <div class="auth-logo">
+          PROP65
+        </div>
+
+        <h2>
+          AI-Powered Compliance
+        </h2>
+
+        <p>
+          Simplify Proposition 65 compliance with intelligent document
+          analysis, automated workflows, and real-time legal insights.
+        </p>
+
+        <div class="auth-features">
+
+          <div>
+            ✓ AI Risk Detection
+          </div>
+
+          <div>
+            ✓ Automated Reports
+          </div>
+
+          <div>
+            ✓ California Compliance
+          </div>
+
+          <div>
+            ✓ Enterprise Ready
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- RIGHT SIDE -->
+
+      <div class="auth-right">
+
+        <!-- LOGIN FORM -->
+
+        <div class="auth-form active" id="loginForm">
+
+          <h2>
+            Welcome Back
+          </h2>
+
+          <p>
+            Sign in to continue.
+          </p>
+
+          <div class="input-group">
+
+            <label>Email Address</label>
+
+            <input type="email" id="loginEmail" placeholder="john@company.com">
+
+          </div>
+
+          <div class="input-group">
+
+            <label>Password</label>
+
+            <input type="password" id="loginPassword" placeholder="••••••••">
+
+          </div>
+
+          <button class="auth-btn">
+
+            Sign In
+
+          </button>
+
+          <div class="auth-switch">
+
+            Don't have an account?
+
+            <span id="showRegister">
+
+              Create Account
+
+            </span>
+
+          </div>
+
+        </div>
+
+        <!-- REGISTER FORM -->
+
+        <div class="auth-form" id="registerForm">
+
+          <h2>
+            Create Account
+          </h2>
+
+          <p>
+            Start using Prop65 today.
+          </p>
+
+          <div class="input-group">
+
+            <label>Full Name</label>
+
+            <input type="text" placeholder="John Doe">
+
+          </div>
+
+          <div class="input-group">
+
+            <label>Company Name</label>
+
+            <input type="text" placeholder="Acme Inc.">
+
+          </div>
+
+          <div class="input-group">
+
+            <label>Email Address</label>
+
+            <input type="email" placeholder="john@company.com">
+
+          </div>
+
+          <div class="input-group">
+
+            <label>Password</label>
+
+            <input type="password" placeholder="••••••••">
+
+          </div>
+
+          <button class="auth-btn">
+
+            Create Account
+
+          </button>
+
+          <div class="auth-switch">
+
+            Already have an account?
+
+            <span id="showLogin">
+
+              Login
+
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
 
   <div class="hazard-tape thin"></div>
 
@@ -1555,8 +1759,8 @@
           <p class="hero-sub">Prop 65 warning labels and exposure memos, built for law firms managing compliance across
             hundreds of clients and thousands of SKUs — reviewed and certified by counsel, not replaced by it.</p>
           <div class="hero-ctas">
-            <a href="#cta" class="btn btn-solid magnetic">Start Your Journey</a>
-            <a href="#faq" class="btn btn-ghost magnetic">View a Sample Memo</a>
+            <a href="#" id="registerBtn" class="btn btn-solid magnetic">Start Your Journey</a>
+            <a href="#" id="registerBtn" class="btn btn-ghost magnetic">View a Sample Memo</a>
           </div>
         </div>
       </div>
@@ -1860,7 +2064,7 @@
               <li>Multi-language label generation</li>
               <li>Full audit trail export</li>
             </ul>
-            <a href="#cta" class="btn btn-solid magnetic" style="width:100%;">Start Your Journey</a>
+            <a href="#" id="registerBtn" class="btn btn-solid magnetic" style="width:100%;">Start Your Journey</a>
           </div>
           <div class="price-card reveal">
             <div class="price-tag">Am Law Scale</div>
@@ -1949,7 +2153,8 @@
         <h2>Stop drafting.<br><span class="accent">Start certifying.</span></h2>
         <p>Join the firms moving Prop 65 compliance out of spreadsheets and into a system built for the statute's actual
           clock.</p>
-        <a href="#" class="btn btn-solid magnetic" style="padding:18px 38px; font-size:14px;">Start Your Journey</a>
+        <a href="#" id="registerBtn" class="btn btn-solid magnetic" style="padding:18px 38px; font-size:14px;">Start
+          Your Journey</a>
       </div>
     </section>
 
@@ -2490,6 +2695,213 @@
     })();
 
     ScrollTrigger.refresh();
+    /* ==========================================================
+     AUTH MODAL
+  ========================================================== */
+
+    const authOverlay = document.getElementById("authOverlay");
+    const authModal = document.getElementById("authModal");
+
+    const loginBtn = document.getElementById("loginBtn");
+    const registerBtn = document.getElementById("registerBtn");
+
+    const closeAuth = document.getElementById("closeAuth");
+
+    const loginForm = document.getElementById("loginForm");
+    const registerForm = document.getElementById("registerForm");
+
+    const showRegister = document.getElementById("showRegister");
+    const showLogin = document.getElementById("showLogin");
+
+    /* ===========================
+       OPEN LOGIN
+    =========================== */
+
+    function openLogin() {
+
+      authOverlay.classList.add("active");
+
+      document.body.classList.add("modal-open");
+
+      loginForm.classList.add("active");
+      registerForm.classList.remove("active");
+
+    }
+
+    /* ===========================
+       OPEN REGISTER
+    =========================== */
+
+    function openRegister() {
+
+      authOverlay.classList.add("active");
+
+      document.body.classList.add("modal-open");
+
+      registerForm.classList.add("active");
+      loginForm.classList.remove("active");
+
+    }
+
+    /* ===========================
+       CLOSE
+    =========================== */
+
+    function closeModal() {
+
+      authOverlay.classList.remove("active");
+
+      document.body.classList.remove("modal-open");
+
+    }
+
+    /* ===========================
+       EVENTS
+    =========================== */
+
+    loginBtn.addEventListener("click", function (e) {
+
+      e.preventDefault();
+
+      openLogin();
+
+    });
+
+    registerBtn.addEventListener("click", function (e) {
+
+      e.preventDefault();
+
+      openRegister();
+
+    });
+
+    closeAuth.addEventListener("click", closeModal);
+
+    /* ===========================
+       CLICK OUTSIDE
+    =========================== */
+
+    authOverlay.addEventListener("click", function (e) {
+
+      if (e.target === authOverlay) {
+
+        closeModal();
+
+      }
+
+    });
+
+    /* ===========================
+       ESC KEY
+    =========================== */
+
+    document.addEventListener("keydown", function (e) {
+
+      if (e.key === "Escape") {
+
+        closeModal();
+
+      }
+
+    });
+
+    /* ===========================
+       SWITCH FORMS
+    =========================== */
+
+    showRegister.addEventListener("click", function () {
+
+      loginForm.classList.remove("active");
+
+      registerForm.classList.add("active");
+
+    });
+
+    showLogin.addEventListener("click", function () {
+
+      registerForm.classList.remove("active");
+
+      loginForm.classList.add("active");
+
+    });
+
+    /* ===========================
+       STATIC BUTTONS
+    =========================== */
+
+    const demoEmail = "hellu@nihal.love";
+    const demoPassword = "Iloveyou1921";
+
+    document.querySelectorAll(".auth-btn").forEach(button => {
+
+      button.addEventListener("click", function (e) {
+
+        e.preventDefault();
+
+        const isLogin = button.textContent.includes("Sign");
+
+        if (isLogin) {
+
+          const email =
+            document.getElementById("loginEmail").value.trim();
+
+          const password =
+            document.getElementById("loginPassword").value.trim();
+
+          if (email !== demoEmail || password !== demoPassword) {
+
+            alert(
+              `Demo Credentials
+
+Email:
+helly@nihal.love
+
+Password:
+Iloveyou1921`
+            );
+
+            return;
+
+          }
+
+        }
+
+        const originalText = button.innerHTML;
+
+        button.disabled = true;
+
+        button.classList.add("loading");
+
+        button.innerHTML = `
+            <span class="spinner"></span>
+            Authenticating...
+        `;
+
+        setTimeout(() => {
+
+          button.classList.remove("loading");
+
+          button.classList.add("success");
+
+          button.innerHTML = "✓ Welcome";
+
+        }, 1800);
+
+        setTimeout(() => {
+
+          document.body.classList.add("page-transition");
+
+          setTimeout(() => {
+
+            window.location.href = "dashboard.html";
+
+          }, 500);
+
+        }, 2800);
+
+      });
+
+    });
   </script>
 </body>
 
