@@ -5,7 +5,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Dashboard</title>
+    <script>
+        (function () {
+            try {
+                const savedTheme = localStorage.getItem('prop65-theme');
+                const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+                document.documentElement.dataset.theme = savedTheme || (prefersLight ? 'light' : 'dark');
+            } catch (error) {
+                document.documentElement.dataset.theme = 'dark';
+            }
+        })();
+    </script>
     <style>
+        :root {
+            --ink: #17272C;
+            --ink-raised: #24363B;
+            --ink-raised-2: #36464C;
+            --paper: #EFEBE6;
+            --paper-dim: #D5CABD;
+            --paper-faint: #B5A99B;
+            --signal: #A8835E;
+            --signal-deep: #80633F;
+            --signal-soft: rgba(168, 131, 94, .12);
+            --line: rgba(239, 235, 230, .12);
+            --line-strong: rgba(239, 235, 230, .22);
+            --page-bg: var(--ink);
+            --surface: rgba(21, 21, 23, .55);
+            --surface-soft: rgba(21, 21, 23, .28);
+            --surface-strong: rgba(21, 21, 23, .7);
+            --surface-embossed: rgba(21, 21, 23, .6);
+            --success: #1f8f4e;
+        }
+
+        html[data-theme="light"] {
+            --ink: #EFEBE6;
+            --ink-raised: #E3DDD5;
+            --ink-raised-2: #C8BBB0;
+            --paper: #17272C;
+            --paper-dim: #24363B;
+            --paper-faint: #36464C;
+            --line: rgba(23, 39, 44, .12);
+            --line-strong: rgba(23, 39, 44, .2);
+            --page-bg: #EFEBE6;
+            --surface: rgba(255, 255, 255, .72);
+            --surface-soft: rgba(255, 255, 255, .42);
+            --surface-strong: rgba(255, 255, 255, .82);
+            --surface-embossed: rgba(255, 255, 255, .76);
+            --success: #15803d;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -14,28 +62,41 @@
 
         body {
             font-family: Arial, sans-serif;
-            background: #0b0d12;
-            color: #fff;
+            background: var(--page-bg);
+            color: var(--paper);
             display: flex
         }
 
         .sidebar {
             width: 250px;
-            background: #11151d;
+            background: var(--surface-embossed);
             height: 100vh;
             padding: 24px;
-            position: fixed
+            position: fixed;
+            border-right: 1px solid var(--line)
         }
 
         .logo {
             font-size: 28px;
             font-weight: bold;
-            color: #f5c542
+            color: var(--signal)
+        }
+
+        .theme-toggle {
+            width: 100%;
+            margin-top: 16px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1px solid var(--line-strong);
+            background: var(--surface);
+            color: var(--paper);
+            font: inherit;
+            cursor: pointer
         }
 
         .menu a {
             display: block;
-            color: #ddd;
+            color: var(--paper-dim);
             text-decoration: none;
             padding: 12px;
             border-radius: 10px;
@@ -44,7 +105,7 @@
 
         .menu a:hover,
         .active {
-            background: #1b2330
+            background: var(--surface-soft)
         }
 
         .main {
@@ -62,15 +123,15 @@
 
         .card,
         .panel {
-            background: #151a23;
-            border: 1px solid #283040;
+            background: var(--surface);
+            border: 1px solid var(--line-strong);
             border-radius: 16px;
             padding: 20px
         }
 
         .num {
             font-size: 34px;
-            color: #f5c542
+            color: var(--signal)
         }
 
         .grid {
@@ -83,8 +144,8 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background: #f5c542;
-            color: #111;
+            background: var(--signal);
+            color: var(--ink);
             padding: 15px 20px;
             border-radius: 30px;
             cursor: pointer
@@ -95,7 +156,7 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            background: #1f8f4e;
+            background: var(--success);
             padding: 12px 18px;
             border-radius: 10px
         }
@@ -224,11 +285,11 @@
 
             box-shadow:
 
-                0 20px 40px rgba(0, 0, 0, .4),
+                0 20px 40px rgba(0, 0, 0, .28),
 
-                0 0 30px rgba(245, 197, 66, .15);
+                0 0 30px var(--signal-soft);
 
-            border-color: #f5c542;
+            border-color: var(--signal);
 
         }
 
@@ -360,6 +421,7 @@
     <div class="sidebar">
         <div class="logo">PROP65</div>
         <div class="menu"><a class="active">🏠 Dashboard</a></div>
+        <button type="button" id="themeToggle" class="theme-toggle">Light</button>
     </div>
     <div class="main">
         <h1>Welcome back 👋</h1>
@@ -414,6 +476,26 @@
         🤖 Ask AI</div>
     <div id="t" class="toast">Demo AI Assistant</div>
     <script>
+        const themeToggle = document.getElementById("themeToggle");
+
+        function setTheme(theme) {
+            document.documentElement.dataset.theme = theme;
+            themeToggle.textContent = theme === "light" ? "Dark" : "Light";
+
+            try {
+                localStorage.setItem("prop65-theme", theme);
+            } catch (error) {
+                // Ignore storage failures.
+            }
+        }
+
+        themeToggle.addEventListener("click", function () {
+            const nextTheme = document.documentElement.dataset.theme === "light" ? "dark" : "light";
+            setTheme(nextTheme);
+        });
+
+        setTheme(document.documentElement.dataset.theme || "dark");
+
         document.querySelectorAll(".num").forEach(num => {
 
             const target = parseInt(num.innerText);
