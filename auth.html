@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Prop65 Shield authentication">
+  <title>Sign in — Prop65 Shield</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      --ivory: #F7EEE7;
+      --paper: #FBF8F5;
+      --cream: #F3E9DF;
+      --sand: #E6DED6;
+      --stone: #C8BCAD;
+      --taupe: #A69485;
+      --taupe-dark: #8D7968;
+      --navy: #10252B;
+      --navy-2: #1B343A;
+      --line: rgba(16, 37, 43, .13);
+      --muted: rgba(16, 37, 43, .62);
+      --serif: "DM Serif Display", Georgia, serif;
+      --sans: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --mono: "IBM Plex Mono", monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 28px;
+      background: var(--ivory);
+      color: var(--navy);
+      font-family: var(--sans);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .page {
+      width: min(100%, 440px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 24px;
+      font: 600 11px/1 var(--mono);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--navy);
+      border-radius: 50%;
+      font-size: 9px;
+    }
+
+    .card {
+      padding: 38px;
+      background: rgba(251, 248, 245, .88);
+      border: 1px solid var(--line);
+      box-shadow: 0 24px 70px rgba(16, 37, 43, .08);
+    }
+
+    .eyebrow {
+      margin-bottom: 10px;
+      color: var(--muted);
+      font: 500 10px/1 var(--mono);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+      font: 400 42px/1.05 var(--serif);
+    }
+
+    .intro {
+      margin-bottom: 26px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .mode {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      margin-bottom: 24px;
+      padding: 4px;
+      background: var(--cream);
+    }
+
+    .mode button {
+      border: 0;
+      padding: 11px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font: 500 10px/1 var(--mono);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .mode button.active {
+      background: var(--navy);
+      color: var(--paper);
+    }
+
+    .panel[hidden] {
+      display: none;
+    }
+
+    .field {
+      margin-bottom: 16px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 7px;
+      font: 500 10px/1 var(--mono);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .field input {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      outline: none;
+      background: var(--paper);
+      color: var(--navy);
+    }
+
+    .field input:focus {
+      border-color: var(--taupe-dark);
+      box-shadow: 0 0 0 3px rgba(166, 148, 133, .14);
+    }
+
+    .submit {
+      width: 100%;
+      margin-top: 4px;
+      padding: 14px 18px;
+      border: 1px solid var(--navy);
+      border-radius: 999px;
+      background: var(--navy);
+      color: var(--paper);
+      cursor: pointer;
+      font: 600 10px/1 var(--mono);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .submit:hover {
+      background: var(--navy-2);
+    }
+
+    .submit:disabled {
+      cursor: wait;
+      opacity: .65;
+    }
+
+    .helper {
+      margin-top: 16px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .helper a {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .auth-message {
+      min-height: 20px;
+      margin-bottom: 14px;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .auth-message.error {
+      color: #8A2F2F;
+    }
+
+    .auth-message.success {
+      color: #315D45;
+    }
+
+    .back-home {
+      display: block;
+      margin-top: 20px;
+      text-align: center;
+      color: var(--muted);
+      font: 500 10px/1 var(--mono);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .back-home:hover {
+      color: var(--navy);
+    }
+
+    @media (max-width: 520px) {
+      body {
+        padding: 18px;
+      }
+
+      .card {
+        padding: 28px 22px;
+      }
+
+      h1 {
+        font-size: 36px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <a class="brand" href="indexlight.html" aria-label="Prop65 Shield home">
+      <span class="brand-mark">P65</span>
+      <span>Prop65 Shield</span>
+    </a>
+
+    <section class="card">
+      <div class="eyebrow">Secure access</div>
+      <h1>Welcome.</h1>
+      <p class="intro">Sign in to your Prop65 Shield workspace or create an account to get started.</p>
+
+      <div class="mode" aria-label="Authentication mode">
+        <button id="mode-login" class="active" type="button">Sign in</button>
+        <button id="mode-signup" type="button">Create account</button>
+      </div>
+
+      <div id="auth-message" class="auth-message" aria-live="polite"></div>
+
+      <div id="login-panel" class="panel">
+        <form id="login-form" novalidate>
+          <div class="field">
+            <label for="login-email">Email</label>
+            <input id="login-email" name="email" type="email" autocomplete="email" required>
+          </div>
+
+          <div class="field">
+            <label for="login-password">Password</label>
+            <input id="login-password" name="password" type="password" autocomplete="current-password" required>
+          </div>
+
+          <button class="submit" type="submit">Sign in</button>
+        </form>
+
+        <p class="helper">
+          <a id="forgot-link" href="#">Forgot your password?</a>
+        </p>
+      </div>
+
+      <div id="signup-panel" class="panel" hidden>
+        <form id="signup-form" novalidate>
+          <div class="field">
+            <label for="signup-email">Email</label>
+            <input id="signup-email" name="email" type="email" autocomplete="email" required>
+          </div>
+
+          <div class="field">
+            <label for="signup-password">Password</label>
+            <input id="signup-password" name="password" type="password" autocomplete="new-password" minlength="6"
+              required>
+          </div>
+
+          <div class="field">
+            <label for="signup-confirm-password">Confirm password</label>
+            <input id="signup-confirm-password" name="confirm-password" type="password" autocomplete="new-password"
+              minlength="6" required>
+          </div>
+
+          <button class="submit" type="submit">Create account</button>
+        </form>
+
+        <p class="helper">A verification email may be sent before your first sign in.</p>
+      </div>
+
+      <div id="forgot-panel" class="panel" hidden>
+        <form id="forgot-form" novalidate>
+          <div class="field">
+            <label for="forgot-email">Account email</label>
+            <input id="forgot-email" name="email" type="email" autocomplete="email" required>
+          </div>
+
+          <button class="submit" type="submit">Send reset link</button>
+        </form>
+
+        <p class="helper">
+          <a id="back-to-login" href="#">Back to sign in</a>
+        </p>
+      </div>
+
+      <div id="reset-panel" class="panel" hidden>
+        <form id="reset-form" novalidate>
+          <div class="field">
+            <label for="reset-password">New password</label>
+            <input id="reset-password" name="password" type="password" autocomplete="new-password" minlength="6"
+              required>
+          </div>
+
+          <div class="field">
+            <label for="reset-confirm-password">Confirm password</label>
+            <input id="reset-confirm-password" name="confirm-password" type="password" autocomplete="new-password"
+              minlength="6" required>
+          </div>
+
+          <button class="submit" type="submit">Update password</button>
+        </form>
+      </div>
+    </section>
+
+    <a class="back-home" href="indexlight.html">← Back to Prop65 Shield</a>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/auth.js"></script>
+
+</body>
+</html>

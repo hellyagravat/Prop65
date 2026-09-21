@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Overview — Prop65 Shield</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body data-page="overview" data-eyebrow="Dashboard" data-title="Welcome back.">
+  <div class="layout">
+    <div id="sidebar-slot"></div>
+    <main class="main">
+      <div id="topbar-slot"></div>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-label">Flagged products</div>
+          <div class="stat-number" id="stat-products">—</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Active warnings</div>
+          <div class="stat-number" id="stat-warnings">—</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Current plan</div>
+          <div class="stat-number" id="stat-plan" style="font-size:32px">—</div>
+        </div>
+      </div>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>My products</h2>
+          <button class="add" id="add-product-button" type="button">+ Add product</button>
+        </div>
+        <div id="dash-message" class="dash-message" aria-live="polite"></div>
+        <div id="my-products"><div class="empty">Loading…</div></div>
+      </section>
+
+      <dialog id="catalog-dialog" class="sheet">
+        <div class="sheet-head">
+          <h2>Add a product</h2>
+          <button class="link-btn" id="catalog-close" type="button">Close</button>
+        </div>
+        <input id="catalog-search" class="sheet-search" type="search" placeholder="Search the catalog…" autocomplete="off">
+        <div id="catalog-list" class="sheet-body"><div class="empty">Loading catalog…</div></div>
+      </dialog>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/matcher.js"></script>
+  <script src="js/warning-generator.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/auth-guard.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

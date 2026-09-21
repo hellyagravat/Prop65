@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Embed — Prop65 Shield</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body data-page="embed" data-eyebrow="Integration" data-title="Embed.">
+  <div class="layout">
+    <div id="sidebar-slot"></div>
+    <main class="main">
+      <div id="topbar-slot"></div>
+      <section class="panel">
+        <div class="panel-header"><h2>Storefront snippet</h2></div>
+        <p class="user-line" style="margin-bottom:20px">
+          Paste this once into your site header. The script matches each product page to your Prop65 Shield catalog and renders the warning automatically.
+        </p>
+        <div class="empty" style="text-align:left;padding:24px">
+          <code id="embed-snippet" style="font-family:var(--mono);font-size:12px;line-height:1.6;word-break:break-all">
+            &lt;script src="https://cdn.prop65shield.com/embed.js" data-key="YOUR_KEY"&gt;&lt;/script&gt;
+          </code>
+        </div>
+        <p class="user-line" style="margin-top:18px">
+          Embed keys are issued once your first product has a generated warning. This page will show your live key here.
+        </p>
+      </section>
+    </main>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/auth-guard.js"></script>
+  <script src="js/page-embed.js"></script>
+</body>
+</html>

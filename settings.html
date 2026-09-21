@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Settings — Prop65 Shield</title>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="css/dashboard.css">
+
+</head>
+
+<body data-page="settings" data-eyebrow="Account" data-title="Settings.">
+
+  <div class="layout">
+
+    <div id="sidebar-slot"></div>
+
+    <main class="main">
+
+      <div id="topbar-slot"></div>
+
+      <div id="dash-message" class="dash-message" aria-live="polite"></div>
+
+      <!-- ==========================================
+           PROFILE
+           ========================================== -->
+
+      <section class="panel">
+
+        <div class="panel-header">
+          <h2>Profile</h2>
+        </div>
+
+        <form id="profile-form">
+
+          <div class="settings-grid">
+
+            <div class="field">
+              <label for="profile-full-name">Full name</label>
+              <input id="profile-full-name" type="text" autocomplete="name" placeholder="Jane Doe">
+            </div>
+
+            <div class="field">
+              <label for="profile-email">Email</label>
+              <input id="profile-email" type="email" disabled title="Email is managed by your sign-in provider">
+              <span class="hint">Email is tied to your sign-in.</span>
+            </div>
+
+            <div class="field">
+              <label for="profile-company">Company</label>
+              <input id="profile-company" type="text" autocomplete="organization" placeholder="Acme Inc.">
+            </div>
+
+            <div class="field">
+              <label for="profile-website">Website</label>
+              <input id="profile-website" type="url" autocomplete="url" placeholder="https://example.com">
+            </div>
+
+            <div class="field">
+              <label for="profile-phone">Phone</label>
+              <input id="profile-phone" type="tel" autocomplete="tel" placeholder="+1 555 010 0100">
+            </div>
+
+          </div>
+
+          <div class="settings-actions">
+            <span class="user-line" id="profile-saved-at"></span>
+            <span class="spacer"></span>
+            <button type="button" class="btn-secondary" id="profile-reset">
+              Reset
+            </button>
+            <button type="submit" class="add" id="profile-save">
+              Save changes
+            </button>
+          </div>
+
+        </form>
+
+      </section>
+
+      <!-- ==========================================
+           NOTIFICATIONS
+           ========================================== -->
+
+      <section class="panel">
+
+        <div class="panel-header">
+          <h2>Notifications</h2>
+        </div>
+
+        <div class="toggle-row">
+
+          <div class="toggle-copy">
+            <strong>New warning generated</strong>
+            <span>Email me when Prop65 Shield generates a warning for one of my products.</span>
+          </div>
+
+          <button class="toggle-switch" type="button" role="switch" aria-checked="true"
+            data-pref="notify_on_warning"></button>
+
+        </div>
+
+        <div class="toggle-row">
+
+          <div class="toggle-copy">
+            <strong>Regulatory updates</strong>
+            <span>Email me when the Prop 65 chemical list or warning rules change.</span>
+          </div>
+
+          <button class="toggle-switch" type="button" role="switch" aria-checked="true"
+            data-pref="notify_on_update"></button>
+
+        </div>
+
+      </section>
+
+      <!-- ==========================================
+           PLAN
+           ========================================== -->
+
+      <section class="panel">
+
+        <div class="panel-header">
+          <h2>Plan</h2>
+        </div>
+
+        <p class="user-line">
+          Upgrading unlocks unlimited products, cart placement, and auto-updated warnings.
+        </p>
+
+        <div class="plan-grid" id="plan-grid">
+          <div class="empty">Loading plans…</div>
+        </div>
+
+      </section>
+
+      <!-- ==========================================
+           SECURITY
+           ========================================== -->
+
+      <section class="panel">
+
+        <div class="panel-header">
+          <h2>Security</h2>
+        </div>
+
+        <p class="user-line">
+          Change your password. You'll be signed out of every device after saving.
+        </p>
+
+        <div class="settings-actions">
+          <span class="spacer"></span>
+          <button type="button" class="btn-secondary" id="password-send">
+            Send password reset email
+          </button>
+        </div>
+
+      </section>
+
+      <!-- ==========================================
+           DANGER ZONE
+           ========================================== -->
+
+      <section class="panel">
+
+        <div class="panel-header">
+          <h2>Danger zone</h2>
+        </div>
+
+        <div class="danger-zone">
+
+          <h3>Delete account</h3>
+
+          <p>
+            Permanently deletes your account, your product list, and all
+            warnings associated with it. This action cannot be undone.
+          </p>
+
+          <button type="button" class="btn-danger" id="account-delete">
+            Delete my account
+          </button>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/matcher.js"></script>
+  <script src="js/warning-generator.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/auth-guard.js"></script>
+  <script src="js/page-settings.js"></script>
+
+</body>
+</html>

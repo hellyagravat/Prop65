@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products — Prop65 Shield</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body data-page="products" data-eyebrow="Catalog" data-title="My products.">
+  <div class="layout">
+    <div id="sidebar-slot"></div>
+    <main class="main">
+      <div id="topbar-slot"></div>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Products in your list</h2>
+          <button class="add" id="add-product-button" type="button">+ Add product</button>
+        </div>
+        <div id="dash-message" class="dash-message" aria-live="polite"></div>
+        <div id="products-list">
+          <div class="empty">Loading…</div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           CATALOG DIALOG
+           ========================================== -->
+
+      <dialog id="catalog-dialog" class="sheet">
+        <div class="sheet-head">
+          <h2>Add a product</h2>
+          <button class="link-btn" id="catalog-close" type="button">Close</button>
+        </div>
+        <input id="catalog-search" class="sheet-search" type="search" placeholder="Search the catalog…" autocomplete="off">
+        <div id="catalog-list" class="sheet-body">
+          <div class="empty">Loading catalog…</div>
+        </div>
+      </dialog>
+
+      <!-- ==========================================
+           INGREDIENT DIALOG (single step)
+           ========================================== -->
+
+      <dialog id="ingredient-dialog" class="sheet">
+
+        <div class="sheet-head">
+          <h2 id="ingredient-dialog-title">Add ingredients</h2>
+          <span class="sheet-sub" id="ingredient-product-name"></span>
+        </div>
+
+        <div class="sheet-body">
+
+          <p class="dialog-intro">
+            Declare what's in this product. We'll match your ingredients
+            against the OEHHA Prop 65 chemical list and generate the
+            warning automatically.
+          </p>
+
+          <div class="field">
+            <label for="ingredient-free-text">Ingredient list</label>
+            <textarea id="ingredient-free-text" rows="4"
+              placeholder="lead solder, formaldehyde resin, PVC plasticiser"></textarea>
+            <span class="hint">
+              Separate with commas or new lines. Common abbreviations
+              (PVC, DEHP, BPA) are recognised.
+            </span>
+          </div>
+
+          <div class="field">
+            <label>Materials</label>
+            <div class="material-grid">
+              <label class="material-check"><input type="checkbox" value="Plastic"> Plastic</label>
+              <label class="material-check"><input type="checkbox" value="Vinyl"> Vinyl / PVC</label>
+              <label class="material-check"><input type="checkbox" value="Metal"> Metal</label>
+              <label class="material-check"><input type="checkbox" value="Fabric"> Fabric / Textile</label>
+              <label class="material-check"><input type="checkbox" value="Leather"> Leather</label>
+              <label class="material-check"><input type="checkbox" value="Ceramic"> Ceramic</label>
+              <label class="material-check"><input type="checkbox" value="Glass"> Glass</label>
+              <label class="material-check"><input type="checkbox" value="Wood"> Wood</label>
+              <label class="material-check"><input type="checkbox" value="Rubber"> Rubber</label>
+              <label class="material-check"><input type="checkbox" value="Cosmetic"> Cosmetic</label>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="ingredient-notes">Additional notes (optional)</label>
+            <input id="ingredient-notes" type="text"
+              placeholder="e.g. lead in the glazing">
+          </div>
+
+          <div id="ingredient-error" class="dialog-error"></div>
+
+          <div class="sheet-actions">
+            <span class="spacer"></span>
+            <button type="button" class="link-btn" id="ingredient-cancel">Cancel</button>
+            <button type="button" class="add" id="ingredient-analyse">Analyse →</button>
+          </div>
+
+        </div>
+
+      </dialog>
+
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/matcher.js"></script>
+  <script src="js/warning-generator.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/auth-guard.js"></script>
+  <script src="js/ingredient-dialog.js"></script>
+  <script src="js/page-products.js"></script>
+</body>
+</html>
