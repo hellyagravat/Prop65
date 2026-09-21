@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page not found — Prop65 Shield</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ivory: #F7EEE7; --paper: #FBF8F5;
+      --navy: #10252B; --taupe-dark: #8D7968;
+      --line: rgba(16, 37, 43, .13); --muted: rgba(16, 37, 43, .62);
+      --serif: "DM Serif Display", Georgia, serif;
+      --sans: Inter, sans-serif; --mono: "IBM Plex Mono", monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 28px;
+      background: var(--ivory);
+      color: var(--navy);
+      font-family: var(--sans);
+    }
+    .wrap { width: min(100%, 520px); text-align: center; }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 34px;
+      font: 600 11px/1 var(--mono);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+    .brand-mark {
+      width: 34px; height: 34px;
+      display: grid; place-items: center;
+      border: 1px solid var(--navy);
+      border-radius: 50%;
+      font-size: 9px;
+    }
+    h1 {
+      font: 400 clamp(60px, 12vw, 120px)/.9 var(--serif);
+      letter-spacing: -.05em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    p {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.8;
+      margin-bottom: 28px;
+    }
+    a.btn {
+      display: inline-block;
+      padding: 14px 24px;
+      border: 1px solid var(--navy);
+      border-radius: 999px;
+      background: var(--navy);
+      color: var(--paper);
+      font: 600 10px/1 var(--mono);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="brand">
+      <span class="brand-mark">P65</span>
+      <span>Prop65 Shield</span>
+    </div>
+    <h1>404</h1>
+    <p>
+      That page doesn't exist. It may have moved, or you might have
+      mistyped the address.
+    </p>
+    <a class="btn" href="/">Back to home</a>
+  </div>
+</body>
+</html>
