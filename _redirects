@@ -1,0 +1,10 @@
+# Clean URLs — /dashboard serves dashboard.html
+/dashboard          /dashboard.html          200
+/products           /products.html           200
+/warnings           /warnings.html           200
+/embed              /embed.html              200
+/activity           /activity.html           200
+/settings           /settings.html           200
+
+# Fallback
+/*                  /404.html                404
