@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Embed — Prop65 Shield</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body data-page="embed" data-eyebrow="Integration" data-title="Embed.">
+  <div class="layout">
+    <div id="sidebar-slot"></div>
+
+    <main class="main">
+      <div id="topbar-slot"></div>
+
+      <div id="dash-message" class="dash-message" aria-live="polite"></div>
+
+      <!-- STEP 1 — Copy script tag -->
+      <section class="panel">
+        <div class="panel-header">
+          <h2>1 · Copy your script</h2>
+        </div>
+        <p class="panel-intro">
+          Paste this single line into your site's <code>&lt;head&gt;</code> tag.
+          That's the entire installation.
+        </p>
+        <div class="snippet-block">
+          <pre id="embed-snippet" class="snippet-code">Loading…</pre>
+          <button class="add small" id="copy-snippet" type="button">Copy</button>
+        </div>
+        <p class="panel-note" id="snippet-note">
+          Waiting for your embed key…
+        </p>
+      </section>
+
+      <!-- STEP 2 — Mark products -->
+      <section class="panel">
+        <div class="panel-header">
+          <h2>2 · Identify your products</h2>
+        </div>
+        <p class="panel-intro">
+          Prop65 Shield needs to know which product each page displays.
+          Two ways to do this — pick whichever is easier for your setup.
+        </p>
+
+        <div class="option-grid">
+          <div class="option-card">
+            <div class="mini-label">Option A · SKU attribute</div>
+            <p>Add a <code>data-prop65-sku</code> attribute to your product container:</p>
+            <pre class="snippet-code small">&lt;div data-prop65-sku="WIDGET-001"&gt;
+  … your product markup …
+&lt;/div&gt;</pre>
+            <p class="panel-note">
+              The value must match the <em>Store SKU</em> you set on each product
+              in <a href="products.html">Products</a>.
+            </p>
+          </div>
+
+          <div class="option-card">
+            <div class="mini-label">Option B · Store URL</div>
+            <p>
+              No HTML edits needed. Just register each product's page URL in
+              <a href="products.html">Products</a> and we'll match it automatically.
+            </p>
+            <p class="panel-note">
+              Works for Shopify, WooCommerce, and any storefront whose product
+              pages have a stable URL.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 3 — Test -->
+      <section class="panel">
+        <div class="panel-header">
+          <h2>3 · Test on your site</h2>
+        </div>
+        <p class="panel-intro">
+          Open a product page on your live storefront. If everything is set up
+          correctly, the Prop 65 warning banner will appear beneath the product
+          title.
+        </p>
+        <p class="panel-note">
+          The warning is invisible to everyone except when a warning exists
+          for that product. Nothing appears on unregistered pages.
+        </p>
+      </section>
+
+      <!-- Live preview -->
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Preview</h2>
+        </div>
+        <p class="panel-intro">
+          This is what the warning looks like on your storefront:
+        </p>
+        <div class="preview-frame">
+          <div class="p65-preview-warning">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+                 aria-hidden="true">
+              <path d="M12 3 L22 20 L2 20 Z"></path>
+              <path d="M12 10 v4"></path>
+              <circle cx="12" cy="17.5" r=".6" fill="currentColor"></circle>
+            </svg>
+            <div>
+              <p>⚠ WARNING: This product can expose you to chemicals including Lead and Cadmium, which is known to the State of California to cause cancer and birth defects or other reproductive harm. For more information go to www.P65Warnings.ca.gov.</p>
+              <a href="https://www.P65Warnings.ca.gov" target="_blank" rel="noopener noreferrer">P65Warnings.ca.gov</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Danger zone -->
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Key settings</h2>
+        </div>
+        <p class="panel-intro">
+          Your embed key is public and safe to share. If you ever need to
+          revoke it — for example if you switch storefronts — you can
+          regenerate it below.
+        </p>
+        <div class="sheet-actions">
+          <span class="spacer"></span>
+          <button class="btn-danger" id="rotate-key" type="button">
+            Regenerate embed key
+          </button>
+        </div>
+        <p class="panel-note" style="margin-top:14px">
+          Regenerating will break any site currently using the old key. You'll
+          need to paste the new script tag into your storefront.
+        </p>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/matcher.js"></script>
+  <script src="js/warning-generator.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/auth-guard.js"></script>
+  <script src="js/page-embed.js"></script>
+</body>
+</html>

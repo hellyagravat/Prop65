@@ -1,0 +1,19 @@
+growth = pdt_0NoAAjyZ60IX3TorVbxOf
+
+agency = pdt_0NoAAycQwRws9mw8c3cC3
+
+API = 
+
+webhook = whsec_PmOAdRHiG0vLqnH6H/T4AJ0GiVzm4OE9
+
+
+cd ~/Projects/project-bolt-sb1-7medfobm\(1\)/project/prop65-shield-supabase-auth
+
+supabase secrets set DODO_API_KEY="1aCJora1kOrqib82.kLLjIogYHcxzfooRG1ZuRSQhZ1pk4mfXMlAVS45kpog-ljqz"
+supabase secrets set DODO_WEBHOOK_SECRET="whsec_PmOAdRHiG0vLqnH6H/T4AJ0GiVzm4OE9"
+
+supabase functions deploy create-checkout
+supabase functions deploy dodo-webhook --no-verify-jwt
+
+b3444f99500384b91fb7da8feb5c3c629f43d38a2f0ae181387020c65085089d 
+
